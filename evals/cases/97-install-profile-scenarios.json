@@ -1,0 +1,1 @@
+{"name": "install: profile scenarios", "kind": "hook", "script": "evals/scripts/install-test.sh", "args": ["{root}"], "expect_exit": 0, "contains": "all passed", "repo_only": true}

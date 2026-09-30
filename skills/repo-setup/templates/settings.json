@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git commit *)",
+      "Bash(git commit)",
+      "Bash(git push *)",
+      "Bash(git push)",
+      "Bash(git add *)",
+      "Bash(git add)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "Bash(git reset *)",
+      "Bash(git stash *)",
+      "Bash(git tag *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git clean *)"
+    ],
+    "ask": [
+      "Bash(git branch *)",
+      "Bash(git branch)",
+      "Bash(git checkout *)",
+      "Bash(git checkout)"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+{"name": "repo-setup has an upgrade mode", "kind": "file_contains", "file": "{root}/skills/repo-setup/SKILL.md", "contains": "## Upgrade mode"}

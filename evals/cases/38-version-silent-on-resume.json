@@ -1,0 +1,1 @@
+{"name": "version: no repeated notice on resume", "kind": "hook", "hook": "workflow-version-check.sh", "env": {"WORKFLOW_HOME": "{fixtures}/home/workflow", "WORKFLOW_SOURCE": "{fixtures}/current"}, "payload": {"cwd": "{fixtures}/behind", "source": "resume"}, "expect_exit": 0, "not_contains": "workflow"}

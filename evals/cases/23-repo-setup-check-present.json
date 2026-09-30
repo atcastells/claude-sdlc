@@ -1,0 +1,1 @@
+{"name": "repo-setup check.sh present", "kind": "file_contains", "file": "{root}/skills/repo-setup/check.sh", "contains": "references a missing path"}

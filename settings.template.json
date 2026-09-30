@@ -1,0 +1,137 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Edit",
+      "Write"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/credentials*)",
+      "Read(**/secrets*)",
+      "Read(**/*secret*)",
+      "Read(**/*password*)",
+      "Read(**/*.keystore)",
+      "Read(**/*.p12)",
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(git push *)",
+      "Bash(git push)",
+      "Bash(git commit *)",
+      "Bash(git merge *)",
+      "Bash(git rebase *)",
+      "Bash(git reset *)",
+      "Bash(git stash *)",
+      "Bash(git tag *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git clean *)",
+      "Bash(sudo *)",
+      "Bash(su *)",
+      "Bash(shutdown *)",
+      "Bash(reboot *)",
+      "Bash(mkfs *)",
+      "Bash(dd *)",
+      "Bash(shred *)",
+      "Bash(mv /*)",
+      "Bash(docker system prune *)",
+      "Bash(git add *)",
+      "Bash(git add)",
+      "Bash(git commit)",
+      "Bash(git merge)",
+      "Bash(git rebase)",
+      "Bash(git stash)",
+      "Bash(git cherry-pick)",
+      "Bash(git reset)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(git checkout *)",
+      "Bash(git branch *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(kill *)",
+      "Bash(killall *)",
+      "Bash(pkill *)",
+      "Bash(systemctl *)",
+      "Bash(crontab *)",
+      "Bash(docker rm *)",
+      "Bash(docker rmi *)",
+      "Bash(docker stop *)",
+      "Bash(docker kill *)",
+      "Bash(npm install -g *)",
+      "Bash(npm uninstall -g *)",
+      "Bash(npm publish *)",
+      "Bash(pip install *)",
+      "Bash(pip uninstall *)",
+      "Bash(apt *)",
+      "Bash(apt-get *)"
+    ],
+    "defaultMode": "auto"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/credential-guard.sh\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/test-guard.sh\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/production-gate.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/evals-on-config-change.sh\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/workflow-version-check.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/status-line.sh"
+  },
+  "model": "opus[1m]",
+  "effortLevel": "medium"
+}

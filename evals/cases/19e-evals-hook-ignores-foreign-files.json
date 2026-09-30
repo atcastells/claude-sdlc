@@ -1,0 +1,1 @@
+{"name": "evals-on-config-change ignores unrelated files", "kind": "hook", "hook": "evals-on-config-change.sh", "env": {"WORKFLOW_HOME": "{fixtures}/home/workflow"}, "payload": {"tool_input": {"file_path": "/tmp/otro-repo/src/app.ts"}}, "expect_exit": 0, "not_contains": "evals"}

@@ -1,0 +1,1 @@
+{"name": "test-guard blocks a skip in a test notebook", "kind": "hook", "hook": "test-guard.sh", "payload": {"tool_input": {"notebook_path": "/r/tests/test_a.ipynb", "new_source": "@pytest.mark.skip\ndef test_x(): pass"}}, "expect_exit": 2}

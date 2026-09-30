@@ -1,0 +1,1 @@
+{"name": "production-gate blocks a deploy to prod", "kind": "hook", "hook": "production-gate.sh", "payload": {"tool_input": {"command": "eas build --profile production"}}, "expect_exit": 2}

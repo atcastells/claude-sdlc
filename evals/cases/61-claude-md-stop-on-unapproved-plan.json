@@ -1,0 +1,1 @@
+{"name": "stop list includes an unapproved plan.md", "kind": "file_contains", "file": "{root}/CLAUDE.md", "file_repo": "{root}/global/CLAUDE.md", "contains": "an unapproved `plan.md`"}

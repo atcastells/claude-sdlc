@@ -1,0 +1,1 @@
+{"name": "production-gate blocks a namespace named like the hook", "kind": "hook", "hook": "production-gate.sh", "payload": {"tool_input": {"command": "kubectl delete ns production-gate"}}, "expect_exit": 2, "origin": "Regression found by the verifier 2026-09-30: stripping the hook name with sed opened this hole"}

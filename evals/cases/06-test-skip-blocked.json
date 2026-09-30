@@ -1,0 +1,1 @@
+{"name": "test-guard blocks .skip", "kind": "hook", "hook": "test-guard.sh", "payload": {"tool_input": {"file_path": "src/cart.test.ts", "old_string": "it(\"s\",()=>{})", "new_string": "it.skip(\"s\",()=>{})"}}, "expect_exit": 2}

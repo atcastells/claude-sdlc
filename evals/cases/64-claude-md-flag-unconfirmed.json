@@ -1,0 +1,1 @@
+{"name": "CLAUDE.md asks to flag what is unconfirmed", "kind": "file_contains", "file": "{root}/CLAUDE.md", "file_repo": "{root}/global/CLAUDE.md", "contains": "say where you looked"}

@@ -1,0 +1,1 @@
+{"name": "production-gate without a profile uses a generic policy", "kind": "hook", "hook": "production-gate.sh", "env": {"WORKFLOW_HOME": "{fixtures}/foreign"}, "payload": {"tool_input": {"command": "kubectl -n production rollout restart deploy/api"}}, "expect_exit": 2, "capture": "all", "contains": "Workflow policy"}

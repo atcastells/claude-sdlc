@@ -1,0 +1,1 @@
+{"name":"version: 1.1.0 to 2.0.0 does not repeat 1.1.0","kind":"hook","hook":"workflow-version-check.sh","env":{"WORKFLOW_HOME":"{fixtures}/home2/workflow","WORKFLOW_SOURCE":"{fixtures}/foreign"},"payload":{"cwd":"{fixtures}/current","source":"startup"},"expect_exit":0,"not_contains":"Project versioning"}

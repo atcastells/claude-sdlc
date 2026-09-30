@@ -1,0 +1,1 @@
+{"name": "check.sh: project behind gives a version WARN", "kind": "hook", "script": "skills/repo-setup/check.sh", "args": ["{fixtures}/behind"], "env": {"WORKFLOW_HOME": "{fixtures}/home/workflow", "CLAUDE_GLOBAL_MD": "{fixtures}/home/CLAUDE.md"}, "expect_exit": 1, "contains": "WARN  workflow 1.0.0 < installed"}

@@ -1,0 +1,1 @@
+{"name":"acme: profile rule installed","kind":"file_contains","file":"{root}/CLAUDE.md","file_repo":"{profile}/CLAUDE.md","contains":"pirate speak"}

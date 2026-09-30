@@ -1,0 +1,1 @@
+{"name":"profile.env with UTF-8 accents loads under LC_ALL=C","kind":"hook","hook":"credential-guard.sh","env":{"WORKFLOW_HOME":"{fixtures}/profile-accents","LC_ALL":"C"},"payload":{"tool_input":{"content":"T=squ_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}},"expect_exit":2,"capture":"all","contains":"Café Vault Zürich"}

@@ -1,0 +1,1 @@
+{"name": "test-guard registered in settings", "kind": "file_contains", "file": "{root}/settings.json", "contains": "hooks/test-guard.sh", "file_repo": "{root}/settings.template.json"}

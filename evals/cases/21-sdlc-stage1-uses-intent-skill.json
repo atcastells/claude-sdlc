@@ -1,0 +1,1 @@
+{"name": "sdlc stage 1 delegates to the intent skill", "kind": "file_contains", "file": "{root}/skills/sdlc/SKILL.md", "contains": "use the `intent` skill"}

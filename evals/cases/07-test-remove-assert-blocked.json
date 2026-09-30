@@ -1,0 +1,1 @@
+{"name": "test-guard blocks removing assertions", "kind": "hook", "hook": "test-guard.sh", "payload": {"tool_input": {"file_path": "src/cart.test.ts", "old_string": "expect(a).toBe(1); expect(b).toBe(2)", "new_string": "expect(a).toBe(1)"}}, "expect_exit": 2, "origin": "Bug 2026-08-27: grep -c counted lines, not occurrences"}

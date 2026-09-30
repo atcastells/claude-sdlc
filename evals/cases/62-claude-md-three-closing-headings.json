@@ -1,0 +1,1 @@
+{"name": "CLAUDE.md sets the three closing headings", "kind": "file_contains", "file": "{root}/CLAUDE.md", "file_repo": "{root}/global/CLAUDE.md", "contains": "**Blocked on"}

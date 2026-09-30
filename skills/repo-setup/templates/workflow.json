@@ -1,0 +1,4 @@
+{
+  "workflow_version": "<installed version, from ~/.claude/workflow/VERSION>",
+  "updated": "<YYYY-MM-DD>"
+}

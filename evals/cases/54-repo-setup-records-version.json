@@ -1,0 +1,1 @@
+{"name": "repo-setup records workflow_version", "kind": "file_contains", "file": "{root}/skills/repo-setup/SKILL.md", "contains": ".claude/workflow.json"}

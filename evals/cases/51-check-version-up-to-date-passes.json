@@ -1,0 +1,1 @@
+{"name": "check.sh: up-to-date project gives a version PASS", "kind": "hook", "script": "skills/repo-setup/check.sh", "args": ["{fixtures}/current"], "env": {"WORKFLOW_HOME": "{fixtures}/home/workflow", "CLAUDE_GLOBAL_MD": "{fixtures}/home/CLAUDE.md"}, "expect_exit": 1, "contains": "PASS  workflow up to date ("}

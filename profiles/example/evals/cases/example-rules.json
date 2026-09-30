@@ -1,0 +1,1 @@
+{"name":"example: profile rules installed","kind":"file_contains","file":"{root}/CLAUDE.md","file_repo":"{profile}/CLAUDE.md","contains":"Organization rules (example profile)"}

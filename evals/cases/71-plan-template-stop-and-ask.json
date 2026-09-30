@@ -1,0 +1,1 @@
+{"name": "plan template: Stop and ask if", "kind": "file_contains", "file": "{root}/skills/sdlc/templates/plan.md", "contains": "## Stop and ask if"}

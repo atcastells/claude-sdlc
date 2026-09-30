@@ -1,0 +1,1 @@
+{"name":"version: missing migrations/ is reported, asks install.sh","kind":"hook","hook":"workflow-version-check.sh","env":{"WORKFLOW_HOME":"{fixtures}/home-no-migrations","WORKFLOW_SOURCE":"{fixtures}/current"},"payload":{"cwd":"{fixtures}/behind","source":"startup"},"expect_exit":0,"contains":"installation is incomplete, recommend running install.sh"}

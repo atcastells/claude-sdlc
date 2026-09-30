@@ -1,0 +1,1 @@
+{"name": "test-guard allows adding assertions", "kind": "hook", "hook": "test-guard.sh", "payload": {"tool_input": {"file_path": "src/cart.test.ts", "old_string": "expect(a).toBe(1)", "new_string": "expect(a).toBe(1); expect(b).toBe(2)"}}, "expect_exit": 0}

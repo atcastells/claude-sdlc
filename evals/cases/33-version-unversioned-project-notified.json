@@ -1,0 +1,1 @@
+{"name": "version: workflow project without a version is notified", "kind": "hook", "hook": "workflow-version-check.sh", "env": {"WORKFLOW_HOME": "{fixtures}/home/workflow", "WORKFLOW_SOURCE": "{fixtures}/current"}, "payload": {"cwd": "{fixtures}/unversioned", "source": "startup"}, "expect_exit": 0, "contains": "/repo-setup"}

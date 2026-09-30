@@ -1,0 +1,1 @@
+{"name":"repo declares a strict semver VERSION","kind":"hook","script":"evals/scripts/assert-semver.sh","args":["{root}"],"expect_exit":0,"contains":"semver ok"}

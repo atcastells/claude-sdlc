@@ -1,0 +1,1 @@
+{"name": "global settings deny git add", "kind": "file_contains", "file": "{root}/settings.json", "file_repo": "{root}/settings.template.json", "contains": "\"Bash(git add *)\""}

@@ -1,0 +1,1 @@
+{"name": "verifier: findings carry a demonstration", "kind": "file_contains", "file": "{root}/agents/verifier.md", "contains": "how to demonstrate"}

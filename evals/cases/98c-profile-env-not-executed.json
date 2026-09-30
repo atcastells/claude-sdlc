@@ -1,0 +1,1 @@
+{"name": "profile.env never executes $(...) or backticks", "kind": "hook", "hook": "credential-guard.sh", "env": {"WORKFLOW_HOME": "{fixtures}/profile-inject"}, "payload": {"tool_input": {"content": "T=squ_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}, "expect_exit": 2, "capture": "all", "contains": "Vault$(touch /tmp/cw-pwned)"}

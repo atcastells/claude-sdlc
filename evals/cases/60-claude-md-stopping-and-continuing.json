@@ -1,0 +1,1 @@
+{"name": "CLAUDE.md has the stopping-and-continuing rule", "kind": "file_contains", "file": "{root}/CLAUDE.md", "file_repo": "{root}/global/CLAUDE.md", "contains": "## Stopping and continuing"}

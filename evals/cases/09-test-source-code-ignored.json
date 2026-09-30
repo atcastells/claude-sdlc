@@ -1,0 +1,1 @@
+{"name": "test-guard ignores non-test code", "kind": "hook", "hook": "test-guard.sh", "payload": {"tool_input": {"file_path": "src/cart.ts", "new_string": "const x = 1"}}, "expect_exit": 0}

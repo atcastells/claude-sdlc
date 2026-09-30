@@ -1,0 +1,1 @@
+{"name": "CLAUDE.md forbids AI mentions", "kind": "file_contains", "file": "{root}/CLAUDE.md", "file_repo": "{root}/global/CLAUDE.md", "contains": "No mentions of AI"}

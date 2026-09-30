@@ -1,0 +1,1 @@
+{"name":"version: project at 1.1.0 is offered only the 2.0.0 migration","kind":"hook","hook":"workflow-version-check.sh","env":{"WORKFLOW_HOME":"{fixtures}/home2/workflow","WORKFLOW_SOURCE":"{fixtures}/foreign"},"payload":{"cwd":"{fixtures}/current","source":"startup"},"expect_exit":0,"contains":"2.0.0 — Organization rules move to profiles"}

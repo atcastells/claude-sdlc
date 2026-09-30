@@ -1,0 +1,1 @@
+{"name": "migration 1.1.0 installed", "kind": "file_contains", "file": "{root}/workflow/migrations/1.1.0.md", "file_repo": "{root}/migrations/1.1.0.md", "contains": "workflow.json"}

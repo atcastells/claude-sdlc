@@ -1,0 +1,1 @@
+{"name": "status line shows effort", "kind": "hook", "script": "status-line.sh", "payload": {"model": {"display_name": "Opus"}, "workspace": {"current_dir": "{fixtures}/foreign"}, "cost": {"total_cost_usd": 0.5}, "effort": {"level": "high"}}, "expect_exit": 0, "contains": "high"}

@@ -1,0 +1,1 @@
+{"name": "REVIEW: Important = blocks merge, with a demonstration", "kind": "file_contains", "file": "{root}/skills/sdlc/templates/REVIEW.md", "contains": "how to demonstrate the failure"}

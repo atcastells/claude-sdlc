@@ -1,0 +1,1 @@
+{"name":"migration 2.0.0 installed","kind":"file_contains","file":"{root}/workflow/migrations/2.0.0.md","file_repo":"{root}/migrations/2.0.0.md","contains":"--profile"}

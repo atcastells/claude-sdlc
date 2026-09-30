@@ -1,0 +1,1 @@
+{"name": "production-gate still blocks prod-something with an action", "kind": "hook", "hook": "production-gate.sh", "payload": {"tool_input": {"command": "kubectl apply -f deploy.yaml -n production-eu"}}, "expect_exit": 2}

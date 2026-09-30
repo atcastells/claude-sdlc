@@ -1,0 +1,1 @@
+{"name": "plan template: Done means", "kind": "file_contains", "file": "{root}/skills/sdlc/templates/plan.md", "contains": "## Done means"}

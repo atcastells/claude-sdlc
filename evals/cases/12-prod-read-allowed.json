@@ -1,0 +1,1 @@
+{"name": "production-gate allows reads", "kind": "hook", "hook": "production-gate.sh", "payload": {"tool_input": {"command": "grep -r production src/"}}, "expect_exit": 0}

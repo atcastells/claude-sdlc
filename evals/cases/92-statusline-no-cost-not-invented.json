@@ -1,0 +1,1 @@
+{"name": "status line without a cost field does not invent one", "kind": "hook", "script": "status-line.sh", "payload": {"model": {"display_name": "Opus"}, "workspace": {"current_dir": "{fixtures}/foreign"}, "context_window": {"used_percentage": null}}, "expect_exit": 0, "not_contains": "$"}

@@ -1,0 +1,1 @@
+{"name": "check-public: leak scenarios", "kind": "hook", "script": "evals/scripts/check-public-test.sh", "args": ["{root}/scripts/check-public.sh"], "expect_exit": 0, "contains": "all passed", "repo_only": true}

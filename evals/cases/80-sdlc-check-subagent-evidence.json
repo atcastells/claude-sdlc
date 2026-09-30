@@ -1,0 +1,1 @@
+{"name": "sdlc: check subagent evidence", "kind": "file_contains", "file": "{root}/skills/sdlc/SKILL.md", "contains": "evidence of each subagent"}

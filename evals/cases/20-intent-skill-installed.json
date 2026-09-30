@@ -1,0 +1,1 @@
+{"name": "intent skill installed", "kind": "file_contains", "file": "{root}/skills/intent/SKILL.md", "contains": "**one at a time**"}

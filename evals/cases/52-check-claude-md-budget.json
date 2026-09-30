@@ -1,0 +1,1 @@
+{"name": "check.sh: CLAUDE.md global + project > 200 lines is a FAIL", "kind": "hook", "script": "skills/repo-setup/check.sh", "args": ["{fixtures}/claude-md-long"], "env": {"WORKFLOW_HOME": "{fixtures}/home/workflow", "CLAUDE_GLOBAL_MD": "{fixtures}/home/CLAUDE.md"}, "expect_exit": 1, "contains": "FAIL  CLAUDE.md global + project"}

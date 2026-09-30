@@ -1,0 +1,1 @@
+{"name":"version: notices are prefixed claude-sdlc:","kind":"hook","hook":"workflow-version-check.sh","env":{"WORKFLOW_HOME":"{fixtures}/home/workflow","WORKFLOW_SOURCE":"{fixtures}/foreign"},"payload":{"cwd":"{fixtures}/behind","source":"startup"},"expect_exit":0,"contains":"claude-sdlc: this project is at"}

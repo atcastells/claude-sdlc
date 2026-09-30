@@ -1,0 +1,1 @@
+{"name":"check.sh: behind with no project migrations passes","kind":"hook","script":"skills/repo-setup/check.sh","args":["{fixtures}/at-2-0-0"],"env":{"WORKFLOW_HOME":"{fixtures}/home-patch/workflow","WORKFLOW_SOURCE":"{fixtures}/foreign","CLAUDE_GLOBAL_MD":"{fixtures}/home/CLAUDE.md"},"expect_exit":1,"contains":"PASS  workflow 2.0.0, no project changes up to 2.0.1"}

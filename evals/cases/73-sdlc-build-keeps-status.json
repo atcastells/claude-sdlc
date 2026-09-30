@@ -1,0 +1,1 @@
+{"name": "sdlc: Build keeps the Status column", "kind": "file_contains", "file": "{root}/skills/sdlc/SKILL.md", "contains": "*Status* column"}

@@ -1,0 +1,1 @@
+{"name": "evals-on-config-change registered in settings", "kind": "file_contains", "file": "{root}/settings.json", "contains": "hooks/evals-on-config-change.sh", "file_repo": "{root}/settings.template.json"}

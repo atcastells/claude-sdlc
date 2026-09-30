@@ -1,0 +1,1 @@
+{"name": "gitignore excludes private profiles", "kind": "file_contains", "file": "{root}/.gitignore", "contains": "!profiles/example/", "repo_only": true}

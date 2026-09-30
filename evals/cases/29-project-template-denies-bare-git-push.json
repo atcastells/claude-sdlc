@@ -1,0 +1,1 @@
+{"name": "project template denies bare git push", "kind": "file_contains", "file": "{root}/skills/repo-setup/templates/settings.json", "contains": "\"Bash(git push)\""}

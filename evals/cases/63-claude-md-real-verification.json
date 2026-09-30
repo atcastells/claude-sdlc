@@ -1,0 +1,1 @@
+{"name": "CLAUDE.md requires a real verification of the change", "kind": "file_contains", "file": "{root}/CLAUDE.md", "file_repo": "{root}/global/CLAUDE.md", "contains": "run a real verification"}
