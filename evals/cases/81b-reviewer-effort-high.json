@@ -1,0 +1,1 @@
+{"name":"reviewer runs at effort high","kind":"file_contains","file":"{root}/agents/reviewer.md","contains":"effort: high"}

@@ -1,0 +1,1 @@
+{"name":"report-check: other agents untouched","kind":"hook","hook":"subagent-report-check.sh","capture":"all","payload":{"hook_event_name":"SubagentStop","agent_type":"Explore","last_assistant_message":"whatever","stop_hook_active":false},"expect_exit":0}

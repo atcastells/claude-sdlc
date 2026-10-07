@@ -1,0 +1,1 @@
+{"name":"sdlc: pin the model per agent, not by env var","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"CLAUDE_CODE_SUBAGENT_MODEL"}

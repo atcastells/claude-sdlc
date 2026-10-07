@@ -1,0 +1,12 @@
+{
+  "name": "plan-resume: all tasks done stays silent",
+  "kind": "hook",
+  "hook": "plan-resume.sh",
+  "payload": {
+    "hook_event_name": "SessionStart",
+    "source": "compact",
+    "cwd": "{fixtures}/plan-done"
+  },
+  "expect_exit": 0,
+  "not_contains": "plan.md"
+}

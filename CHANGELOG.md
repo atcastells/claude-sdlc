@@ -5,6 +5,25 @@ that the migration alone does not fix. **MINOR**: adds rules, skills or project
 files (ships `migrations/<version>.md` if it touches projects). **PATCH**:
 fixes with no change in expected behavior.
 
+## 2.1.0 — 2026-10-07
+
+- **`reviewer` agent** (Sonnet 5.5, `effort: high`, read-only): one pass of
+  `REVIEW.md` per invocation. Stage 5 launches three in parallel; the main
+  session consolidates and checks every cited file:line.
+- `verifier`: `effort: high`, `maxTurns: 40`.
+- **`subagent-report-check` hook** (`SubagentStop`, `verifier` and
+  `reviewer`): a report without its `VERDICT:` / `PASS:` line, or an
+  `[IMPORTANT]` finding without `demonstration:`, is sent back once.
+- **`plan-resume` hook** (`SessionStart`, matcher `compact`): after a
+  compaction, lists the open tasks of every `.sdlc/*/plan.md` as context.
+- `sdlc`: downward rung of the ladder (small models read, never edit; pin the
+  model per agent, no `CLAUDE_CODE_SUBAGENT_MODEL`); `/advisor fable` before
+  switching to Fable; effort changes keep the cache on API key or
+  subscription; dynamic workflow for review only on request.
+- Sources: claude.dev ("What a task costs on Opus 5.5", "Building with Claude
+  Sonnet 5.5"), code.claude.com (sub-agents, hooks, advisor).
+- No project migration: nothing `/repo-setup` leaves in projects changes.
+
 ## 2.0.0 — 2026-09-30
 
 - **Profiles.** The core is organization-neutral and in English. Organization

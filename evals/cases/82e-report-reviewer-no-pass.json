@@ -1,0 +1,1 @@
+{"name":"report-check: reviewer without PASS blocked","kind":"hook","hook":"subagent-report-check.sh","capture":"all","payload":{"hook_event_name":"SubagentStop","agent_type":"reviewer","last_assistant_message":"Findings:\n  [NIT] a.sh:3 — naming","stop_hook_active":false},"expect_exit":2}

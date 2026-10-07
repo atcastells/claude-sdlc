@@ -1,0 +1,1 @@
+{"name":"subagent-report-check registered in settings","kind":"file_contains","file":"{root}/settings.json","file_repo":"{root}/settings.template.json","contains":"hooks/subagent-report-check.sh"}

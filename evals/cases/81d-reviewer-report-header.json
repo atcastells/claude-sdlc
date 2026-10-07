@@ -1,0 +1,1 @@
+{"name":"reviewer report starts with PASS: <pass>","kind":"file_contains","file":"{root}/agents/reviewer.md","contains":"PASS: <bugs | security | conformance>"}

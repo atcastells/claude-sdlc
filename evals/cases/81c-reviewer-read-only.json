@@ -1,0 +1,1 @@
+{"name":"reviewer tools are read-only","kind":"file_contains","file":"{root}/agents/reviewer.md","contains":"tools: Read, Glob, Grep, Bash"}

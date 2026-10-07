@@ -1,0 +1,1 @@
+{"name":"report-check: stop_hook_active lets it stop","kind":"hook","hook":"subagent-report-check.sh","capture":"all","payload":{"hook_event_name":"SubagentStop","agent_type":"verifier","last_assistant_message":"no verdict here","stop_hook_active":true},"expect_exit":0}

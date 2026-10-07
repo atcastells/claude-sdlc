@@ -1,0 +1,14 @@
+{
+  "name": "report-check: verifier without VERDICT blocked",
+  "kind": "hook",
+  "hook": "subagent-report-check.sh",
+  "capture": "all",
+  "payload": {
+    "hook_event_name": "SubagentStop",
+    "agent_type": "verifier",
+    "last_assistant_message": "Build ok\nTests ok",
+    "stop_hook_active": false
+  },
+  "expect_exit": 2,
+  "contains": "VERDICT"
+}

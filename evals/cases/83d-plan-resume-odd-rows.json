@@ -1,0 +1,12 @@
+{
+  "name": "plan-resume: only table rows, last cell even without trailing pipe",
+  "kind": "hook",
+  "hook": "plan-resume.sh",
+  "payload": {
+    "hook_event_name": "SessionStart",
+    "source": "compact",
+    "cwd": "{fixtures}/plan-odd"
+  },
+  "expect_exit": 0,
+  "contains": "plan.md: T5 (pending)\""
+}

@@ -1,0 +1,1 @@
+{"name":"sdlc: dynamic workflow only on request","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"only when the user asks"}

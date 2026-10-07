@@ -1,0 +1,12 @@
+{
+  "name": "plan-resume: lists open tasks after compaction",
+  "kind": "hook",
+  "hook": "plan-resume.sh",
+  "payload": {
+    "hook_event_name": "SessionStart",
+    "source": "compact",
+    "cwd": "{fixtures}/plan-open"
+  },
+  "expect_exit": 0,
+  "contains": ".sdlc/demo/plan.md: T2 (in progress: waiting on fixture), T3 (pending)"
+}

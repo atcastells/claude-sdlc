@@ -1,0 +1,14 @@
+{
+  "name": "report-check: IMPORTANT without demonstration blocked",
+  "kind": "hook",
+  "hook": "subagent-report-check.sh",
+  "capture": "all",
+  "payload": {
+    "hook_event_name": "SubagentStop",
+    "agent_type": "verifier",
+    "last_assistant_message": "VERDICT: red\n  [IMPORTANT] src/a.sh:12 — unquoted var",
+    "stop_hook_active": false
+  },
+  "expect_exit": 2,
+  "contains": "demonstration"
+}

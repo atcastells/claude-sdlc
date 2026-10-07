@@ -99,7 +99,11 @@ Nothing reaches human review with a broken build.
 
 Read the repo's `REVIEW.md` (if missing, offer to create it from
 `templates/REVIEW.md`). Three passes: bugs/logic, security, and conformance
-against `spec.md` + `plan.md`.
+against `spec.md` + `plan.md`. Launch three `reviewer` subagents in parallel,
+one per pass (`bugs`, `security`, `conformance`); you consolidate: open every
+cited file:line, drop duplicates, keep the 5 nits that matter most. A dynamic
+workflow for the review only when the user asks for one: it costs several
+times a subagent review.
 
 Classify each finding **Important** or **Nit**, at most 5 nits. Important is
 only what would block the merge, with file, line, why it is wrong and how to
@@ -134,14 +138,20 @@ guides and "what a task costs" (claude.dev, 2026).
 - **One stage, one cut.** Closing a stage writes its artifact: that is the
   natural pause for `/compact` or, when switching slug, `/clear`. The next
   session resumes from the artifact and the *Status* column, not from memory.
-- **Do not break the cache mid-session**: do not change effort or connect MCP
-  servers; do it at the start or after a cut.
+- **Do not break the cache mid-session**: switching model, toggling fast mode
+  or connecting MCP servers rewrites it; do it at the start or after a cut.
+  Effort is different: with an API key or subscription, changing it keeps the
+  cache on Opus 5.5; on Bedrock, Vertex or a gateway it clears it.
 - **Effort and model ladder.** `medium` by default → `high` if it gets stuck →
-  `xhigh` for complex problems → Fable 5.1 only if Opus 5.5 fails twice at
-  `xhigh`. Lower effort with the setting, not by asking the prompt to "think
-  less".
-- **Cheap subagents read, the main session edits.** Searches, logs and
-  read-only audits go to Explore or a Sonnet/Haiku subagent; edits stay in the
-  main session. Check the evidence of each subagent before accepting it (open
+  `xhigh` for complex problems → `/advisor fable` (Fable advises at decision
+  points, the cache stays) → Fable 5.1 as the main model only if Opus 5.5
+  still fails twice at `xhigh`. Lower effort with the setting, not by asking
+  the prompt to "think less".
+- **Down the ladder: small models read, never for edits.** Searches, logs,
+  test runs, verification and review go to Explore, `verifier`, `reviewer` or
+  a Sonnet/Haiku subagent; edits stay in the main session (a mechanical
+  multi-file edit: main model at `low`). Pin each agent's `model` in its
+  definition; do not set `CLAUDE_CODE_SUBAGENT_MODEL`, which moves every
+  agent at once. Check the evidence of each subagent before accepting it (open
   the file:line it cites) and consolidate the results in a table.
 - **Measure, do not estimate**: `/usage` gives the real cost of the session.

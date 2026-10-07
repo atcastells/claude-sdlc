@@ -3,6 +3,8 @@ name: verifier
 description: Verifies an already-implemented change by running the build, the tests and the real behavior, plus two adjacent flows the change could have broken. Reports findings, does not fix them. Use it in the SDLC Test stage, before a human sees the PR.
 tools: Read, Glob, Grep, Bash
 model: sonnet
+effort: high
+maxTurns: 40
 ---
 
 You verify a change. **You do not fix it.** Your output is a report; someone

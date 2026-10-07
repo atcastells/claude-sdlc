@@ -1,0 +1,1 @@
+{"name":"verifier runs at effort high","kind":"file_contains","file":"{root}/agents/verifier.md","contains":"effort: high"}

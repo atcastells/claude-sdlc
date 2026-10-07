@@ -1,0 +1,12 @@
+{
+  "name": "plan-resume: repo without .sdlc stays silent",
+  "kind": "hook",
+  "hook": "plan-resume.sh",
+  "payload": {
+    "hook_event_name": "SessionStart",
+    "source": "compact",
+    "cwd": "{fixtures}/foreign"
+  },
+  "expect_exit": 0,
+  "not_contains": "hookEventName"
+}
