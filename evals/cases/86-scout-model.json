@@ -1,0 +1,1 @@
+{"name":"scout runs on haiku","kind":"file_contains","file":"{root}/agents/scout.md","contains":"model: haiku"}

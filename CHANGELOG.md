@@ -5,6 +5,34 @@ that the migration alone does not fix. **MINOR**: adds rules, skills or project
 files (ships `migrations/<version>.md` if it touches projects). **PATCH**:
 fixes with no change in expected behavior.
 
+## 2.2.1 — 2026-10-08
+
+- **Fix:** `workflow-version-check` stayed silent when the installation came
+  from one clone and the developer worked in another clone that was ahead.
+  It now notices any claude-sdlc clone ahead of the installation and does
+  not treat a clone as a project.
+- Every notice that asks for an install ends with the command to run, for
+  the agent to show verbatim and the developer to run with `!`:
+  `! cd '<clone>' && ./install.sh` (with `git pull --ff-only &&` when a
+  project is ahead of the source). Paths are single-quoted.
+- No project migration.
+
+## 2.2.0 — 2026-10-08
+
+- **`scout` agent** (Haiku 5.5, `effort: medium`, read-only, `maxTurns:
+  15`): lookups, logs and test output, with a summary that cites file:line.
+  `effort: medium` because at `low` Haiku 5.5 is more likely to skip a search
+  or a check; the turn cap keeps its prompt under the 100K-token price step.
+- `sdlc`: the ladder names the models — `scout` (Haiku 5.5) reads, `verifier`
+  / `reviewer` (Sonnet 5.5) verify and review, the main session edits — and
+  the Haiku 5.5 price step (prompts over 100K tokens cost 5×).
+- `verifier` and `reviewer` stay on Sonnet 5.5.
+- The `haiku` alias is Haiku 5.5 on the Anthropic API from Claude Code
+  2.1.293; on Bedrock, Google Cloud and Foundry it is still Haiku 4.5.
+- Sources: platform.claude.com (Haiku 5.5 overview, "Prompting Claude Haiku
+  5.5"), code.claude.com (model config, changelog).
+- No project migration: nothing `/repo-setup` leaves in projects changes.
+
 ## 2.1.0 — 2026-10-07
 
 - **`reviewer` agent** (Sonnet 5.5, `effort: high`, read-only): one pass of

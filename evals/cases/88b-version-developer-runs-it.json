@@ -1,0 +1,1 @@
+{"name":"version: the developer runs the install command","kind":"hook","hook":"workflow-version-check.sh","env":{"WORKFLOW_HOME":"{fixtures}/home/workflow","WORKFLOW_SOURCE":"{fixtures}/source-ahead"},"payload":{"cwd":"{fixtures}/current","source":"startup"},"expect_exit":0,"contains":"the developer runs it"}

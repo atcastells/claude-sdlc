@@ -1,0 +1,1 @@
+{"name":"scout caps its turns at 15","kind":"file_contains","file":"{root}/agents/scout.md","contains":"maxTurns: 15"}

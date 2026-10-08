@@ -1,0 +1,1 @@
+{"name":"scout tools are read-only","kind":"file_contains","file":"{root}/agents/scout.md","contains":"tools: Read, Glob, Grep, Bash"}

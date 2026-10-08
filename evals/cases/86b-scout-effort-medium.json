@@ -1,0 +1,1 @@
+{"name":"scout runs at effort medium","kind":"file_contains","file":"{root}/agents/scout.md","contains":"effort: medium"}

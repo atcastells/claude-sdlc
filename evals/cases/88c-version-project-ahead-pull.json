@@ -1,0 +1,1 @@
+{"name":"version: project ahead gives pull + install","kind":"hook","hook":"workflow-version-check.sh","env":{"WORKFLOW_HOME":"{fixtures}/home/workflow","WORKFLOW_SOURCE":"{fixtures}/current"},"payload":{"cwd":"{fixtures}/ahead","source":"startup"},"expect_exit":0,"contains":"git pull --ff-only && ./install.sh"}

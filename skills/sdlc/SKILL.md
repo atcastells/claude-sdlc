@@ -147,11 +147,11 @@ guides and "what a task costs" (claude.dev, 2026).
   points, the cache stays) → Fable 5.1 as the main model only if Opus 5.5
   still fails twice at `xhigh`. Lower effort with the setting, not by asking
   the prompt to "think less".
-- **Down the ladder: small models read, never for edits.** Searches, logs,
-  test runs, verification and review go to Explore, `verifier`, `reviewer` or
-  a Sonnet/Haiku subagent; edits stay in the main session (a mechanical
-  multi-file edit: main model at `low`). Pin each agent's `model` in its
-  definition; do not set `CLAUDE_CODE_SUBAGENT_MODEL`, which moves every
-  agent at once. Check the evidence of each subagent before accepting it (open
-  the file:line it cites) and consolidate the results in a table.
+- **Down the ladder: small models read, never for edits.** Lookups, logs and
+  test output → `scout` (Haiku 5.5), in short tasks: over 100K prompt tokens
+  it costs 5×; verification and review → `verifier` / `reviewer` (Sonnet 5.5);
+  edits stay in the main session (mechanical multi-file edit: main model at
+  `low`). Pin each agent's `model` in its definition; do not set
+  `CLAUDE_CODE_SUBAGENT_MODEL`, which moves every agent at once. Check the
+  evidence of each subagent (open the file:line it cites) and consolidate.
 - **Measure, do not estimate**: `/usage` gives the real cost of the session.

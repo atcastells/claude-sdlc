@@ -23,13 +23,34 @@ source_ver=$({ tr -d "[:space:]" < "$source_dir/VERSION"; } 2>/dev/null)
 
 msgs=()
 
+# Single-quotes a path for a shell command the developer will paste
+quote() { printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\\\''/g")"; }
+# install.sh writes to ~/.claude: the agent shows the command, the developer runs it
+run_cmd() {
+  [ -d "$1" ] || return 0
+  local pull=""
+  [ "${2:-}" = pull ] && pull="git pull --ff-only && "
+  printf '\nShow the developer this command verbatim; the developer runs it (the ! prefix runs it from this session):\n  ! cd %s && %s./install.sh' "$(quote "$1")" "$pull"
+}
+
+# A claude-sdlc clone (the recorded source or another one) is not a project
+is_clone() { [ -f "$1/install.sh" ] && [ -f "$1/VERSION" ] && [ -f "$1/global/CLAUDE.md" ] && [ -f "$1/hooks/workflow-version-check.sh" ]; }
+
 # The source repo has a version this machine has not installed yet
 if is_semver "$source_ver" && ver_lt "$installed" "$source_ver"; then
-  msgs+=("claude-sdlc: this machine has $installed installed and the source repo ($source_dir) is at $source_ver. Recommend the developer runs \`$source_dir/install.sh\`.")
+  msgs+=("claude-sdlc: this machine has $installed installed and the source repo ($source_dir) is at $source_ver. Recommend the developer runs install.sh.$(run_cmd "$source_dir")")
 fi
 
-# Nothing to migrate in the source repo itself
-if [ "$proj" != "$source_dir" ]; then
+# Working in a clone other than the recorded source, ahead of the installation
+if [ "$proj" != "$source_dir" ] && is_clone "$proj"; then
+  clone_ver=$({ tr -d "[:space:]" < "$proj/VERSION"; } 2>/dev/null)
+  if is_semver "$clone_ver" && ver_lt "$installed" "$clone_ver"; then
+    msgs+=("claude-sdlc: this repo is a claude-sdlc clone at $clone_ver and this machine has $installed installed${source_dir:+ (from $source_dir)}. To install from this clone:$(run_cmd "$proj")")
+  fi
+fi
+
+# Nothing to migrate in a claude-sdlc clone itself
+if [ "$proj" != "$source_dir" ] && ! is_clone "$proj"; then
   wf="$proj/.claude/workflow.json"
   if [ -f "$wf" ]; then
     pv=$(jq -r '.workflow_version // empty' "$wf" 2>/dev/null)
@@ -40,7 +61,7 @@ if [ "$proj" != "$source_dir" ]; then
     elif ! is_semver "$pv"; then
       msgs+=("claude-sdlc: .claude/workflow.json declares a version that is not semver (X.Y.Z, no leading zeros). Offer /repo-setup upgrade to fix it.")
     elif ver_lt "$pv" "$installed" && [ ! -d "$home/migrations" ]; then
-      msgs+=("claude-sdlc: this project is at $pv and the installed version is $installed, but $home/migrations is missing: the installation is incomplete, recommend running install.sh.")
+      msgs+=("claude-sdlc: this project is at $pv and the installed version is $installed, but $home/migrations is missing: the installation is incomplete, recommend running install.sh.${source_dir:+$(run_cmd "$source_dir")}")
     elif ver_lt "$pv" "$installed"; then
       # No migration in range (e.g. a patch release) = nothing to change in the project
       list=$(pending_migrations "$home/migrations" "$pv" "$installed" | sed 's/^[^	]*	/  - /')
@@ -48,7 +69,7 @@ if [ "$proj" != "$source_dir" ]; then
 $list
 Before anything else, tell the developer and offer \`/repo-setup upgrade\` to apply them (with confirmation).")
     elif ver_lt "$installed" "$pv"; then
-      msgs+=("claude-sdlc: this project declares $pv but this machine has $installed. Recommend updating the claude-sdlc repo and running install.sh before touching workflow files.")
+      msgs+=("claude-sdlc: this project declares $pv but this machine has $installed. Recommend updating the claude-sdlc repo and running install.sh before touching workflow files.${source_dir:+$(run_cmd "$source_dir" pull)}")
     fi
   elif [ -d "$proj/.sdlc" ] || [ -f "$proj/REVIEW.md" ]; then
     msgs+=("claude-sdlc: this project uses the workflow but has no .claude/workflow.json, so there is no record of which version it applied. Offer \`/repo-setup upgrade\` to record it (installed: $installed).")

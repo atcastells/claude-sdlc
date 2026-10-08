@@ -1,0 +1,1 @@
+{"name":"version: a clone at the installed version stays silent","kind":"hook","hook":"workflow-version-check.sh","env":{"WORKFLOW_HOME":"{fixtures}/home/workflow","WORKFLOW_SOURCE":"{fixtures}/current"},"payload":{"cwd":"{fixtures}/sdlc-clone-current","source":"startup"},"expect_exit":0,"not_contains":"claude-sdlc"}
