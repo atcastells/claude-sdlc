@@ -1,0 +1,1 @@
+{"name": "run.sh: file_lacks passes and fails, with and without until", "kind": "hook", "script": "evals/scripts/run-profile-installed-test.sh", "args": ["{fixtures}/profile-cases", "lacks"], "expect_exit": 0, "contains": "lacks passed", "repo_only": true}

@@ -1,0 +1,1 @@
+{"name":"template profile: CLAUDE.md has the nothing-to-act-on section","kind":"file_contains","file":"{root}/skills/repo-setup/templates/project-profile/CLAUDE.md","contains":"## Organization rules with nothing to act on here","repo_only":true}

@@ -1,0 +1,1 @@
+{"name":"template profile: CLAUDE.md has Repository policy","kind":"file_contains","file":"{root}/skills/repo-setup/templates/project-profile/CLAUDE.md","contains":"## Repository policy","repo_only":true}

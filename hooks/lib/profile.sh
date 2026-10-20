@@ -26,3 +26,40 @@ load_profile() {
     printf -v "$k" '%s' "$v"
   done < "$f"
 }
+
+# project_profile_dir CWD -> prints the absolute dir of the profile CWD's
+# .claude/workflow.json declares ("profile": "<relative dir>").
+# Return 0 = valid dir printed; 1 = nothing declared; 2 = declared but invalid
+# (absolute, with "..", or resolving outside CWD, e.g. via symlink); 3 = declared
+# (relative, no "..") but the directory does not exist.
+project_profile_dir() {
+  local cwd="$1" wf v root dir
+  [ -n "$cwd" ] || return 1
+  wf="$cwd/.claude/workflow.json"
+  [ -f "$wf" ] || return 1
+  v=$(jq -r '.profile // empty | tostring' "$wf" 2>/dev/null) || return 1
+  [ -n "$v" ] || return 1
+  case "$v" in
+    /*|..|../*|*/..|*/../*|*$'\n'*) return 2 ;;
+  esac
+  root=$(cd "$cwd" 2>/dev/null && pwd -P) || return 1
+  dir=$(cd "$cwd/$v" 2>/dev/null && pwd -P) || return 3
+  case "$dir/" in "$root"/*) ;; *) return 2 ;; esac
+  [ "$dir" != "$root" ] || return 2
+  printf '%s\n' "$dir"
+}
+
+# project_profile_file CWD NAME [MAX_BYTES] -> prints CWD's profile dir/NAME only
+# if the profile dir is valid and NAME is a regular file, not a symlink,
+# physically inside that dir, of at most MAX_BYTES (default 4096; checked before
+# anything reads the content). Returns 1 otherwise, 4 when only the size failed.
+project_profile_file() {
+  local dir f max="${3:-4096}" size
+  dir=$(project_profile_dir "$1") || return 1
+  f="$dir/$2"
+  [ -f "$f" ] && [ ! -L "$f" ] || return 1
+  [ "$(cd "$(dirname "$f")" 2>/dev/null && pwd -P)" = "$dir" ] || return 1
+  size=$(wc -c < "$f" | tr -d ' ')
+  [ "$size" -le "$max" ] 2>/dev/null || return 4
+  printf '%s\n' "$f"
+}

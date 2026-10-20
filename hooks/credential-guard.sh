@@ -8,6 +8,8 @@
 load_profile
 
 payload=$(cat)
+cwd=$(printf '%s' "$payload" | jq -r '.cwd // ""' 2>/dev/null)
+repo_env=$(project_profile_file "$cwd" profile.env 2>/dev/null) && load_profile "$repo_env"
 content=$(printf '%s' "$payload" | jq -r '
   [.tool_input.content?, .tool_input.new_string?, .tool_input.new_source?, (.tool_input.edits[]?.new_string)?]
   | map(select(. != null)) | join("\n")' 2>/dev/null)

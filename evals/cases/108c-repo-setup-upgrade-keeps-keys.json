@@ -1,0 +1,1 @@
+{"name":"repo-setup upgrade keeps other workflow.json keys","kind":"file_contains","file":"{root}/skills/repo-setup/SKILL.md","contains":"keep every other key"}

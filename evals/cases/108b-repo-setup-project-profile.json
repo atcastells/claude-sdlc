@@ -1,0 +1,1 @@
+{"name":"repo-setup skill mentions the project profile declaration","kind":"file_contains","file":"{root}/skills/repo-setup/SKILL.md","contains":"\"profile\""}

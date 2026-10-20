@@ -1,0 +1,1 @@
+{"name":"template profile: CLAUDE.md has Quality criteria","kind":"file_contains","file":"{root}/skills/repo-setup/templates/project-profile/CLAUDE.md","contains":"## Quality criteria","repo_only":true}

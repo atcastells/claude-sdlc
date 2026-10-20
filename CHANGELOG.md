@@ -5,6 +5,40 @@ that the migration alone does not fix. **MINOR**: adds rules, skills or project
 files (ships `migrations/<version>.md` if it touches projects). **PATCH**:
 fixes with no change in expected behavior.
 
+## 2.5.0 — 2026-10-20
+
+- **Secondary profile per repository.** A repo declares
+  `"profile": ".claude/profile"` in `.claude/workflow.json`. The new
+  `project-profile` hook (`SessionStart`: startup, clear, compact; silent on
+  resume) injects that profile's `CLAUDE.md` (≤ 150 lines) for that repo
+  only. It adds to the organization profile and never disables it: where an
+  organization rule has nothing to act on, the profile says so. The repo's
+  own `CLAUDE.md` does not grow.
+- The path must be relative, without `..`, and stay inside the repo; a
+  symlinked `CLAUDE.md` or `profile.env` is ignored.
+- `credential-guard` and `production-gate` load the repo profile's
+  `profile.env` on top of the global one, so their messages name that
+  repo's secrets manager and policy.
+- `evals/run.sh` accepts `WORKFLOW_PROFILE=<dir>` in installed mode too:
+  a repo profile's `evals/cases/` run with the installed suite.
+- Template `skills/repo-setup/templates/project-profile/` (glossary and
+  tone, quality criteria, repository policy, organization rules with nothing
+  to act on here) and a line in `repo-setup`.
+- **Review fixes** (three `reviewer` passes before the PR):
+  - Repo profile files are size-capped before reading (`profile.env`
+    ≤ 4 KB, `CLAUDE.md` ≤ 16 KB): a large `profile.env` could make a guard
+    exceed its 5 s timeout.
+  - Injected content is capped at 150 lines and 12 KB; notices never echo
+    the declared path; a missing profile dir gets its own notice; the header
+    says the text is repo-authored.
+  - Profile cases cannot run code (`script`, `env`, path-like `hook` are
+    skipped). New case kind `file_lacks` (pattern, optional `until`).
+  - Evals for the public template and for guards ignoring symlinked,
+    oversized or undeclared repo `profile.env`.
+- `/repo-setup upgrade` sets only `workflow_version` and `updated` in
+  `.claude/workflow.json` and keeps every other key, such as `profile`.
+- No project migration: the key is optional.
+
 ## 2.4.0 — 2026-10-20
 
 - **Fix: reports handed back through `SubagentHandback` were not read.**
