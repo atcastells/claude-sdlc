@@ -1,0 +1,1 @@
+{"name": "production-gate: repo profile overrides the policy name", "kind": "hook", "hook": "production-gate.sh", "env": {"WORKFLOW_HOME": "{fixtures}/profile-home"}, "payload": {"cwd": "{fixtures}/repo-profile", "tool_input": {"command": "kubectl -n production rollout restart deploy/api"}}, "expect_exit": 2, "capture": "all", "contains": "fixture policy"}

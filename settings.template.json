@@ -155,6 +155,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/project-profile.sh\"",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "SubagentStop": [

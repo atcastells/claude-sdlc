@@ -4,7 +4,7 @@
 #   usage: evals/run.sh [pattern]
 # Root = the parent of evals/: in the repo it tests the repo, in ~/.claude it
 # tests the installation. EVALS_ROOT overrides it; WORKFLOW_PROFILE=<dir> adds
-# that profile's cases (repo mode).
+# that profile's cases (repo and installed mode).
 set -uo pipefail
 # Relative EVALS_ROOT/WORKFLOW_PROFILE resolve from the caller, before the cd
 [ -n "${EVALS_ROOT:-}" ] && { EVALS_ROOT="$(cd "$EVALS_ROOT" && pwd)" || exit 1; }
@@ -32,9 +32,9 @@ expand() {
 pat="${1:-*}"
 pass=0; fail=0; failed=()
 
-# Repo mode: WORKFLOW_PROFILE=<dir> adds the profile cases
+# WORKFLOW_PROFILE=<dir> adds the profile cases (repo and installed mode)
 case_files=(cases/$pat.json)
-[ -n "$profile" ] && [ "$mode" = repo ] && case_files+=("$profile"/evals/cases/$pat.json)
+[ -n "$profile" ] && case_files+=("$profile"/evals/cases/$pat.json)
 
 for f in "${case_files[@]}"; do
   [ -e "$f" ] || continue
@@ -45,6 +45,15 @@ for f in "${case_files[@]}"; do
   # Cases about files that only exist in the repo (scripts/, profiles/)
   if [ "$mode" = installed ] && [ "$(jq -r '.repo_only // false' "$f")" = true ]; then
     echo "SKIP (repo only)"; continue
+  fi
+
+  # Profile cases come from a repo-controlled dir: they may not run code
+  if [ -n "$profile" ] && [ "${f#"$profile"/}" != "$f" ]; then
+    reason=""
+    if jq -e 'has("script")' "$f" >/dev/null; then reason="script"
+    elif jq -e 'has("env")' "$f" >/dev/null; then reason="env"
+    elif [[ "$(jq -r '.hook // empty | tostring' "$f")" == */* ]]; then reason="hook path"; fi
+    if [ -n "$reason" ]; then echo "SKIP (profile cases may not run code: $reason)"; continue; fi
   fi
 
   target_file() {
@@ -90,6 +99,18 @@ for f in "${case_files[@]}"; do
       target=$(target_file)
       want=0
       [ -e "$target" ] && got=1 || got=0
+      ;;
+    file_lacks)
+      # .pattern: ERE, case-insensitive. .until: literal line prefix; only the lines before it are checked
+      target=$(target_file)
+      pattern=$(jq -r '.pattern' "$f")
+      until=$(jq -r '.until // empty' "$f")
+      want=0
+      if [ ! -f "$target" ]; then got=1; detail="no file"
+      else
+        hit=$(awk -v u="$until" 'u != "" && index($0, u) == 1 { exit } { print }' "$target" | grep -inE -- "$pattern" | head -n 1)
+        if [ -n "$hit" ]; then got=1; detail="line ${hit%%:*}"; else got=0; fi
+      fi
       ;;
     max_lines)
       target=$(target_file)

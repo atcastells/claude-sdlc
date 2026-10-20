@@ -62,6 +62,10 @@ scripts that do not exist. Applied as is.
   = `~/.claude/workflow/VERSION` and today's date. It records which workflow
   version was applied; without it, the session-start notice cannot tell
   whether the repo is behind.
+- Optional secondary profile: a repo may declare one with `"profile":
+  ".claude/profile"` in `.claude/workflow.json`, starting from
+  `templates/project-profile/`. It adds to the organization profile for that
+  repo only and is injected at session start.
 
 **Judgement calls** (need the user's decision): referenced documents that do
 not exist — delete the references, generate them from the code, or note them
@@ -89,8 +93,9 @@ With `/repo-setup upgrade`, or when the session-start notice
 4. **Present the full block**: per migration, the missing changes, with file
    and what gets added. A single confirmation, as in step 3. Merge, do not
    replace: the repo may have its own rules in `settings.json` or `REVIEW.md`.
-5. **Apply, bump the version and measure again.** `.claude/workflow.json` ←
-   `v_installed` and today's date. Then `check.sh`: it must report
+5. **Apply, bump the version and measure again.** In `.claude/workflow.json`
+   set `workflow_version` to `v_installed` and `updated` to today's date;
+   keep every other key (e.g. `profile`). Then `check.sh`: it must report
    `PASS  workflow up to date` and `FAIL: 0`.
 6. Close with the list of touched files. The developer makes the commit;
    suggest `chore: workflow <v_project> -> <v_installed>` as the message.

@@ -1,0 +1,1 @@
+{"name":"project-profile: SessionStart scenarios","kind":"hook","script":"evals/scripts/project-profile-test.sh","args":["{root}/hooks/project-profile.sh","{fixtures}/project-profile"],"expect_exit":0,"contains":"all passed"}

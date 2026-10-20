@@ -1,0 +1,1 @@
+{"name": "run.sh: profile cases run in installed mode", "kind": "hook", "script": "evals/scripts/run-profile-installed-test.sh", "args": ["{fixtures}/profile-cases"], "expect_exit": 0, "contains": "all passed", "repo_only": true}

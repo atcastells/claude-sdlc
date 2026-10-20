@@ -1,0 +1,1 @@
+{"name":"guard hooks: repo profile ignored when symlinked, oversized or undeclared","kind":"hook","script":"evals/scripts/guard-repo-profile-test.sh","args":["{root}/hooks"],"expect_exit":0,"contains":"all passed","repo_only":true}

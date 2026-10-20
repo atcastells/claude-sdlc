@@ -1,0 +1,1 @@
+{"name": "fixture profile case: loaded from profile dir", "kind": "file_contains", "file": "{profile}/marker.txt", "contains": "profile-fixture-marker"}

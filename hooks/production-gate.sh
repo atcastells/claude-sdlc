@@ -7,6 +7,8 @@
 load_profile
 
 payload=$(cat)
+cwd=$(printf '%s' "$payload" | jq -r '.cwd // ""' 2>/dev/null)
+repo_env=$(project_profile_file "$cwd" profile.env 2>/dev/null) && load_profile "$repo_env"
 cmd=$(printf '%s' "$payload" | jq -r '.tool_input.command // ""' 2>/dev/null)
 [ -z "$cmd" ] && exit 0
 

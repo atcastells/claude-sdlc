@@ -1,0 +1,1 @@
+{"name":"template profile: evals/cases has the example case","kind":"file_contains","file":"{root}/skills/repo-setup/templates/project-profile/evals/cases/example-profile-sections.json","contains":"## Repository policy","repo_only":true}

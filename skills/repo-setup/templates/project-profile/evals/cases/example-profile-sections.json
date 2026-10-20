@@ -1,0 +1,1 @@
+{"name":"project profile: repository policy section present","kind":"file_contains","file":"{profile}/CLAUDE.md","contains":"## Repository policy"}
