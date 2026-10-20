@@ -1,0 +1,1 @@
+{"name":"PostToolUse matcher for task-actuals","kind":"file_contains","file":"{root}/settings.json","file_repo":"{root}/settings.template.json","contains":"\"matcher\": \"Edit|Write|MultiEdit\""}

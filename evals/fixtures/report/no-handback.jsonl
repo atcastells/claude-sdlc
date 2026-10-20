@@ -1,0 +1,2 @@
+{"type":"user","message":{"role":"user","content":"do it"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"plain text report"}]}}

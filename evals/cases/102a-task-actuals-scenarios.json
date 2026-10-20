@@ -1,0 +1,1 @@
+{"name":"task-actuals: SubagentStop scenarios","kind":"hook","script":"evals/scripts/task-actuals-test.sh","args":["{root}/hooks/task-actuals.sh","{fixtures}/actuals"],"expect_exit":0,"contains":"all passed"}

@@ -1,0 +1,14 @@
+{
+  "name": "calibrate: no history prints the starting table",
+  "kind": "hook",
+  "script": "skills/sdlc/calibrate.sh",
+  "args": [
+    "{fixtures}/calibrate/empty"
+  ],
+  "payload": {},
+  "expect_exit": 0,
+  "contains": "No history yet",
+  "env": {
+    "CLAUDE_SDLC_ACTUALS": "{fixtures}/calibrate/none.jsonl"
+  }
+}

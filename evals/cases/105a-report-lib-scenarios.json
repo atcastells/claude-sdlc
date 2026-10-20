@@ -1,0 +1,1 @@
+{"name":"report lib: subagent_report scenarios","kind":"hook","script":"evals/scripts/report-lib-test.sh","args":["{root}/hooks/lib/report.sh","{fixtures}/report"],"expect_exit":0,"contains":"all passed"}

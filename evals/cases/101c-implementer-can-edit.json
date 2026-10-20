@@ -1,0 +1,1 @@
+{"name":"implementer can edit and write","kind":"file_contains","file":"{root}/agents/implementer.md","contains":"tools: Read, Glob, Grep, Bash, Edit, Write"}

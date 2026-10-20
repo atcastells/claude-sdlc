@@ -5,6 +5,95 @@ that the migration alone does not fix. **MINOR**: adds rules, skills or project
 files (ships `migrations/<version>.md` if it touches projects). **PATCH**:
 fixes with no change in expected behavior.
 
+## 2.4.0 — 2026-10-20
+
+- **Fix: reports handed back through `SubagentHandback` were not read.**
+  Subagents deliver their report as the `message` of that tool, not as final
+  text, so in 2.3.0 every `Deviation cause:` was lost and
+  `subagent-report-check` saw an empty message. New `hooks/lib/report.sh`
+  reads the last handback from the subagent transcript, falling back to
+  `last_assistant_message`.
+- `subagent-report-check` now checks the report **before** it leaves, on
+  `PreToolUse` with matcher `SubagentHandback`; it blocks at most once per
+  `agent_id`. On `SubagentStop` it skips agents that handed back.
+- **Machine-level log** `~/.claude/actuals.jsonl` (override:
+  `CLAUDE_SDLC_ACTUALS`): every closing line also lands there with a `repo`
+  field, so a new repo's first plan can calibrate from the others. Never
+  committed, never sent anywhere.
+- `calibrate.sh`: per runner, repo and machine-log figures side by side;
+  `use: repo` from 5 tasks of that runner, else the machine log (or the
+  repo when the machine log has none of that runner yet). It prints
+  the **median actual** minutes and tokens, which is what to estimate with:
+  ratios mix tasks estimated with different starting tables.
+- **New starting table** from 18 measured tasks: implementer S 2m/200k,
+  M 2m/300k, L 3m/400k; scout 1.5m/650k (each request under 100K);
+  verifier/reviewer 8m/700k; main 5m/6M. Rows with under 3 samples are
+  marked low confidence.
+- **Shared context per plan**: `templates/context.md` (≤ 30 lines). The
+  main session writes `.sdlc/<slug>/context.md` before the first wave; every
+  implementer reads it first and may add one `Learned:` line to its report;
+  the main session folds those lines in after each wave. In this release's
+  own plan, the 7 implementer runs had a median of 154k tokens (range
+  95–457k) against a median of about 240k in the 15 runs before.
+- `main` task causes come only from an explicit `done (cause: …)` in the
+  Status cell.
+- **Review fixes** (three `reviewer` passes before the PR):
+  - `cause` is redacted before it is logged: the `credential-guard`
+    patterns (now shared in `hooks/lib/leak-patterns.sh`) and URLs with
+    user:password become `[redacted]`. Found live: a reviewer's report
+    quoted a fake credential and the hook stored it.
+  - Concurrent writes no longer lose lines: `mkdir` lock (a lock older than
+    a minute is treated as left by a killed hook), unique tmp file,
+    rewrite only when the `agent_id` is already logged.
+  - One plan edit that closes a task and starts the next now records the
+    closing line in the machine log too.
+  - `task-actuals` acts only on a `plan.md` under `cwd`;
+    `subagent-report-check` uses `agent_id` as a marker name only when it
+    matches `^[A-Za-z0-9_-]+$`.
+- Project migration `2.4.0`: `.sdlc/README.md` lists `context.md`.
+- Sources: live transcripts of 2.3.0 runs (handback shape, hook events);
+  code.claude.com (hooks, sub-agents); claude.dev ("What a task costs on
+  Opus 5.5" for the agent-team cost).
+
+## 2.3.0 — 2026-10-20
+
+- **Plans with estimates and parallel waves.** The `plan.md` task table
+  gains `Runs on`, `Depends` and `Est` (minutes / tokens); *Status* stays
+  last. New sections: `Schedule` (waves of tasks with no pending dependency
+  and disjoint files; critical-path wall-clock next to the sequential sum)
+  and `Estimate vs actual`.
+- **`implementer` agent** (Sonnet 5.5, `effort: medium`, `maxTurns: 40`):
+  one well-specified plan task per invocation, only its listed files, red
+  test first, no git writes. Its report carries `TASK:`, `RESULT:` and
+  `Deviation cause:`; `subagent-report-check` sends it back otherwise.
+- **Rule change** from 2.1.0: small models no longer "never edit". Haiku
+  never edits; Sonnet edits only as `implementer`, for a task with a clear
+  spec and a test that proves it ("Building with Claude Sonnet 5.5",
+  claude.dev). Integration and decisions stay in the main session.
+- **`task-actuals` hook** (`SubagentStop`; `PostToolUse` on `plan.md`
+  edits): appends measured minutes and tokens per task to
+  `.sdlc/<slug>/actuals.jsonl`, with the deviation from the estimate and its
+  cause; deviations over 50 % are flagged, never blocked. Delegated tasks
+  are found by the tag `[sdlc:<slug>/T<n> est=<min>m/<ktok>k]` on the first
+  line of the prompt; `main` tasks by their *Status* going from
+  `in progress` to `done`. Output tokens are not recorded: transcripts store
+  usage at stream start.
+- **`skills/sdlc/calibrate.sh`**: prints the starting estimate table and
+  the median actual/estimate per runner from past `actuals.jsonl`.
+- `plan-resume`: when the plan has a `## Tasks` heading, only that section
+  is read; the `Estimate vs actual` table also has `T<n>` rows. Plans
+  without the heading keep the old behavior.
+- `sdlc` Stage 3: estimate with `calibrate.sh`, route down the ladder,
+  launch a wave in one message, check `git diff --stat` after each wave.
+- Sources: claude.dev ("Building with Claude Sonnet 5.5", "What a task
+  costs on Opus 5.5", "Spending your effort"), code.claude.com (sub-agents,
+  hooks), platform.claude.com (models overview).
+- Project migration `2.3.0`: `.sdlc/README.md` lists `actuals.jsonl`.
+- Known, unchanged: `install.sh` takes each hook event from the template
+  wholesale, so a user-defined `PostToolUse` entry in `~/.claude/settings.json`
+  is replaced (the backup `settings.json.bak-<timestamp>` keeps it). 2.3.0
+  adds a second template `PostToolUse` entry.
+
 ## 2.2.1 — 2026-10-08
 
 - **Fix:** `workflow-version-check` stayed silent when the installation came

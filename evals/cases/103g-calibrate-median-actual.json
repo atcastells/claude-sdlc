@@ -1,0 +1,14 @@
+{
+  "name": "calibrate: median actual line per runner",
+  "kind": "hook",
+  "script": "skills/sdlc/calibrate.sh",
+  "args": [
+    "{fixtures}/calibrate/repo2"
+  ],
+  "env": {
+    "CLAUDE_SDLC_ACTUALS": "{fixtures}/calibrate/machine6.jsonl"
+  },
+  "payload": {},
+  "expect_exit": 0,
+  "contains": "  median actual: repo 2.0m/200k  all 4.0m/300k"
+}

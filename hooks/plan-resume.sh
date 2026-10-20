@@ -11,9 +11,13 @@ proj=$(printf '%s' "$payload" | jq -r '.cwd // empty' 2>/dev/null)
 lines=()
 for plan in "$proj"/.sdlc/*/plan.md; do
   [ -f "$plan" ] || continue
-  # Task rows: | T<n> | ... | <status> |  — the last non-empty cell is the status
-  open=$(awk -F'|' '
-    $1 ~ /^[[:space:]]*$/ && $2 ~ /^[[:space:]]*T[0-9]+[a-z]?[[:space:]]*$/ {
+  # Task rows: | T<n> | ... | <status> |  — the last non-empty cell is the status.
+  # With a "## Tasks" heading only that section counts: "Estimate vs actual"
+  # also has T<n> rows.
+  scoped=0; grep -q '^## Tasks' "$plan" && scoped=1
+  open=$(awk -F'|' -v scoped="$scoped" '
+    /^## / { intasks = ($0 ~ /^## Tasks/) }
+    (!scoped || intasks) && $1 ~ /^[[:space:]]*$/ && $2 ~ /^[[:space:]]*T[0-9]+[a-z]?[[:space:]]*$/ {
       id = $2; n = NF; while (n > 2 && $n ~ /^[[:space:]]*$/) n--; st = $n
       gsub(/^[[:space:]]+|[[:space:]]+$/, "", id); gsub(/^[[:space:]]+|[[:space:]]+$/, "", st)
       if (tolower(st) !~ /^done/) out = out (out ? ", " : "") id " (" st ")"

@@ -20,16 +20,9 @@ produced, who approved it.
 
 ## Where they live
 
-Repo root, always committed:
-
-```
-.sdlc/<slug>/intent.md
-.sdlc/<slug>/spec.md
-.sdlc/<slug>/plan.md
-.sdlc/<slug>/incident.md   (only when it applies)
-REVIEW.md                  (root, the repo's review policy)
-```
-
+Repo root, always committed: `.sdlc/<slug>/` holds `intent.md`, `spec.md`,
+`plan.md`, `actuals.jsonl` (written by the `task-actuals` hook) and
+`incident.md` when it applies; `REVIEW.md` at the root is the review policy.
 `<slug>` in kebab-case, derived from the intent. E.g. `.sdlc/search-suggestions/`.
 
 ## Routing
@@ -72,28 +65,37 @@ trace is scope someone added — move it to "out of scope" and say so.
 
 ## Stage 3 — Build → `plan.md`, then the diff
 
-Read `spec.md` and the repo's `CLAUDE.md`. Write `plan.md`: what "done"
-means, when to stop and ask, tasks, files touched, tests that prove them,
-risks. Template: `templates/plan.md`.
+Read `spec.md` and the repo's `CLAUDE.md`. Write `plan.md` from
+`templates/plan.md`: done means, stop-and-ask, tasks with the test that
+proves each, risks; per task who runs it, what it depends on, its estimate.
 
-**Stop and wait for the engineer's approval before implementing.** The
-playbook is explicit: no autonomous mode without an approved plan.
+- **Estimate**: `bash ~/.claude/skills/sdlc/calibrate.sh <repo>` prints the
+  starting table and each runner's median actual: estimate with the latter.
+- **Route** each task down the ladder (below); **schedule** waves of tasks
+  with no pending dependency and disjoint files, and give the critical-path
+  wall-clock next to the sequential sum.
 
-Once approved, implement. TDD for business logic: red test first. If a test
-fails, **fix the code, not the test** — the `test-guard` hook blocks
-weakening tests during a fix.
+**Stop and wait for the engineer's approval before implementing**: no
+autonomous mode without an approved plan.
 
-When each task closes, update its *Status* column in `plan.md` (done, in
-progress, blocked + a short note). It is the live task list: it survives
-compaction and a new session, which resumes by reading that column.
+Once approved, write `.sdlc/<slug>/context.md` from `templates/context.md`
+(you are its only writer) and implement wave by wave: launch a wave's
+subagents in one message, each prompt's first line
+`[sdlc:<slug>/T<n> est=<min>m/<ktok>k]` (the `task-actuals` hook measures
+it), then "read context.md first". After the wave compare `git diff --stat`
+with the plan's files, read every diff, and fold the reports' `Learned:`
+lines into `context.md` (no duplicates, ≤ 30 lines, no sensitive data).
+TDD: red test first. If a test fails, **fix the code, not the test**.
+
+Close each task in its *Status* column (done, in progress, blocked + note):
+the live list, the resume point and the clock of `main` tasks. At Build close
+fill *Estimate vs actual* from `actuals.jsonl`: estimates, not people.
 
 ## Stage 4 — Test → self-verification
 
 Verify your work before anyone sees it: tests, build, or a screenshot. Use
 the `verifier` subagent to check the change plus two adjacent flows; it
-reports, it does not fix.
-
-Nothing reaches human review with a broken build.
+reports, it does not fix. Nothing reaches human review with a broken build.
 
 ## Stage 5 — Deploy → PR + findings
 
@@ -147,11 +149,12 @@ guides and "what a task costs" (claude.dev, 2026).
   points, the cache stays) → Fable 5.1 as the main model only if Opus 5.5
   still fails twice at `xhigh`. Lower effort with the setting, not by asking
   the prompt to "think less".
-- **Down the ladder: small models read, never for edits.** Lookups, logs and
-  test output → `scout` (Haiku 5.5), in short tasks: over 100K prompt tokens
-  it costs 5×; verification and review → `verifier` / `reviewer` (Sonnet 5.5);
-  edits stay in the main session (mechanical multi-file edit: main model at
-  `low`). Pin each agent's `model` in its definition; do not set
+- **Down the ladder.** Lookups, logs and test output → `scout` (Haiku 5.5),
+  in short tasks: over 100K prompt tokens it costs 5×. Haiku never edits. A
+  task with a clear spec, listed files and a proving test → `implementer`
+  (Sonnet 5.5, half the main model's price); verification and review →
+  `verifier` / `reviewer` (Sonnet 5.5); integration, decisions and unclear
+  code stay in the main session. Pin each agent's `model` in its definition; do not set
   `CLAUDE_CODE_SUBAGENT_MODEL`, which moves every agent at once. Check the
   evidence of each subagent (open the file:line it cites) and consolidate.
 - **Measure, do not estimate**: `/usage` gives the real cost of the session.

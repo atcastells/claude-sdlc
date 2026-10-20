@@ -1,0 +1,1 @@
+{"name": "plan template: Runs on, Depends, Est columns before Status", "kind": "file_contains", "file": "{root}/skills/sdlc/templates/plan.md", "contains": "| Runs on | Depends | Est | Status |"}

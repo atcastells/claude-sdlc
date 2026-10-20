@@ -1,0 +1,4 @@
+{"type":"user","message":{"role":"user","content":"[sdlc:demo/T1 est=2m/200k] do it"}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"working"},{"type":"tool_use","id":"t1","name":"SubagentHandback","input":{"message":"first report"}}]}}
+{"type":"user","message":{"role":"user","content":[{"type":"tool_result","tool_use_id":"t1","content":"blocked, fix it"}]}}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","id":"t2","name":"SubagentHandback","input":{"message":"TASK: demo/T1\nRESULT: done\nDeviation cause: none"}}]}}

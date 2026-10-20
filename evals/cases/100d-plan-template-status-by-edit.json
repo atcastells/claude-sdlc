@@ -1,0 +1,1 @@
+{"name":"plan template: main tasks are timed through Edit and in progress","kind":"file_contains","file":"{root}/skills/sdlc/templates/plan.md","contains":"with Edit, not a shell command"}

@@ -1,0 +1,14 @@
+{
+  "name": "calibrate: repo with 5 uses repo",
+  "kind": "hook",
+  "script": "skills/sdlc/calibrate.sh",
+  "args": [
+    "{fixtures}/calibrate/repo5"
+  ],
+  "env": {
+    "CLAUDE_SDLC_ACTUALS": "{fixtures}/calibrate/machine6.jsonl"
+  },
+  "payload": {},
+  "expect_exit": 0,
+  "contains": "use: repo"
+}

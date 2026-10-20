@@ -4,6 +4,7 @@
 # PreToolUse hook. Exit 2 = block and report to the model.
 
 . "$(dirname "$0")/lib/profile.sh"
+. "$(dirname "$0")/lib/leak-patterns.sh"
 load_profile
 
 payload=$(cat)
@@ -14,19 +15,8 @@ content=$(printf '%s' "$payload" | jq -r '
 [ -z "$content" ] && exit 0
 
 # High-confidence patterns only. Placeholders and env lookups are ignored below.
-patterns=(
-  'squ_[0-9a-f]{40}'                          # SonarQube
-  '(ghp|gho|ghs|ghu|ghr)_[A-Za-z0-9]{36}'     # GitHub
-  'AKIA[0-9A-Z]{16}'                          # AWS access key
-  'sk-(proj-)?[A-Za-z0-9_-]{32,}'             # OpenAI-style
-  'sk-ant-[A-Za-z0-9_-]{32,}'                 # Anthropic
-  'xox[baprs]-[A-Za-z0-9-]{10,}'              # Slack
-  'glpat-[A-Za-z0-9_-]{20}'                   # GitLab PAT
-  '-----BEGIN [A-Z ]*PRIVATE KEY-----'        # private keys
-  '(password|passwd|secret|api[_-]?key|token)[[:space:]]*[:=][[:space:]]*["'"'"'][^"'"'"'$<{[:space:]]{12,}["'"'"']'
-)
 
-for p in "${patterns[@]}"; do
+for p in "${LEAK_PATTERNS[@]}"; do
   hit=$(printf '%s' "$content" | grep -aoEm1 -e "$p") || continue
   # Ignore obvious placeholders / env indirection
   printf '%s' "$hit" | grep -qiE 'xxx|placeholder|example|changeme|your[_-]|dummy|fake|redacted|\$\{|process\.env|os\.environ' && continue

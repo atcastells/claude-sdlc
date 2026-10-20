@@ -1,0 +1,1 @@
+{"name":"plan template: a main task closes with done (cause: ...)","kind":"file_contains","file":"{root}/skills/sdlc/templates/plan.md","contains":"done (cause:"}

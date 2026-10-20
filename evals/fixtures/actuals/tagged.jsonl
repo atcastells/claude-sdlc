@@ -1,0 +1,9 @@
+{"type":"user","timestamp":"2026-10-14T10:00:00.000Z","message":{"role":"user","content":"[sdlc:demo/T4 est=5m/400k]\nDo the synthetic task."}}
+{"type":"attachment","timestamp":"2026-10-14T10:00:01.000Z"}
+{"type":"assistant","timestamp":"2026-10-14T10:01:00.000Z","message":{"id":"msg_a","model":"model-x","usage":{"input_tokens":1000,"output_tokens":5000,"cache_creation_input_tokens":100000,"cache_read_input_tokens":150000}}}
+{"type":"assistant","timestamp":"2026-10-14T10:01:01.000Z","message":{"id":"msg_a","model":"model-x","usage":{"input_tokens":1000,"output_tokens":5000,"cache_creation_input_tokens":100000,"cache_read_input_tokens":150000}}}
+{"type":"user","timestamp":"2026-10-14T10:02:00.000Z","message":{"role":"user","content":"tool result"}}
+{"type":"assistant","timestamp":"2026-10-14T10:04:00.000Z","message":{"id":"msg_b","model":"model-y","usage":{"input_tokens":2000,"output_tokens":7000,"cache_creation_input_tokens":50000,"cache_read_input_tokens":85000}}}
+{"type":"assistant","timestamp":"2026-10-14T10:04:01.000Z","message":{"id":"msg_b","model":"model-y","usage":{"input_tokens":2000,"output_tokens":7000,"cache_creation_input_tokens":50000,"cache_read_input_tokens":85000}}}
+{"type":"assistant","timestamp":"2026-10-14T10:04:02.000Z","message":{"id":"msg_b","model":"model-y","usage":{"input_tokens":2000,"output_tokens":7000,"cache_creation_input_tokens":50000,"cache_read_input_tokens":85000}}}
+{"type":"assistant","timestamp":"2026-10-14T10:07:30.500Z","message":{"id":"msg_c","model":"model-y","usage":{"input_tokens":500,"output_tokens":500,"cache_creation_input_tokens":0,"cache_read_input_tokens":0}}}

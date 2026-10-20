@@ -1,0 +1,13 @@
+{
+  "name": "report-check: valid implementer report passes",
+  "kind": "hook",
+  "hook": "subagent-report-check.sh",
+  "capture": "all",
+  "payload": {
+    "hook_event_name": "SubagentStop",
+    "agent_type": "implementer",
+    "last_assistant_message": "TASK: demo/T3\nRESULT: done\n\nTest: bash evals/run.sh → red / green\nFiles: a.sh\nDeviation cause: none",
+    "stop_hook_active": false
+  },
+  "expect_exit": 0
+}

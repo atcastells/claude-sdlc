@@ -10,6 +10,11 @@ produced, who approved it.
   spec.md      requirements and design, policy applied       -> PO + tech lead approve
   plan.md      atomic tasks; nothing is implemented until    -> the engineer approves
                it is APPROVED
+  context.md   decisions, conventions and lessons shared by the tasks of
+               one plan; written by the main session, read first by every
+               implementer; no personal or sensitive business data
+  actuals.jsonl  estimated vs measured minutes and tokens per task, appended
+               by the task-actuals hook; calibrates estimates, not people
   review.md    validation findings, for the PR               -> code owner approves
   incident.md  only if something failed in production        -> service owner
 ```

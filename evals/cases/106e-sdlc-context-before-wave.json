@@ -1,0 +1,1 @@
+{"name":"sdlc: main writes context.md before the first wave","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"`context.md`"}

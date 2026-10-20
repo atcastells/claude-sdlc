@@ -1,0 +1,2 @@
+{"type":"user","timestamp":"2026-10-14T10:00:00.000Z","message":{"role":"user","content":[{"type":"text","text":"Context line."},{"type":"text","text":"[sdlc:demo/T4 est=5m/400k]"}]}}
+{"type":"assistant","timestamp":"2026-10-14T10:05:00.000Z","message":{"id":"msg_a","model":"model-x","usage":{"input_tokens":10,"output_tokens":10,"cache_creation_input_tokens":0,"cache_read_input_tokens":0}}}

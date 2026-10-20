@@ -1,0 +1,14 @@
+{
+  "name": "report-check: implementer without Deviation cause blocked",
+  "kind": "hook",
+  "hook": "subagent-report-check.sh",
+  "capture": "all",
+  "payload": {
+    "hook_event_name": "SubagentStop",
+    "agent_type": "implementer",
+    "last_assistant_message": "TASK: demo/T3\nRESULT: done\n\nTest: bash evals/run.sh → red / green\nFiles: a.sh",
+    "stop_hook_active": false
+  },
+  "expect_exit": 2,
+  "contains": "Deviation cause:"
+}
