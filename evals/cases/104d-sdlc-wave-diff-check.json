@@ -1,0 +1,1 @@
+{"name":"sdlc: diff checked against the plan after a wave","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"git diff --stat"}

@@ -1,0 +1,14 @@
+{
+  "name": "calibrate: repo 2 and machine log 6 use all",
+  "kind": "hook",
+  "script": "skills/sdlc/calibrate.sh",
+  "args": [
+    "{fixtures}/calibrate/repo2"
+  ],
+  "env": {
+    "CLAUDE_SDLC_ACTUALS": "{fixtures}/calibrate/machine6.jsonl"
+  },
+  "payload": {},
+  "expect_exit": 0,
+  "contains": "implementer  repo n=2 min x1.00 tok x1.00  all n=6 min x2.00 tok x1.50  use: all"
+}

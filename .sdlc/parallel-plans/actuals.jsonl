@@ -1,0 +1,7 @@
+{"task":"T1","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":5,"est_ktok":400,"min":1.5,"ktok":235,"dev_min_pct":-70,"dev_tok_pct":-41,"flag":true,"cause":"none","date":"2026-10-20"}
+{"task":"T2","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":5,"est_ktok":400,"min":1.5,"ktok":188,"dev_min_pct":-70,"dev_tok_pct":-53,"flag":true,"cause":"none","date":"2026-10-20"}
+{"task":"T3","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":5,"est_ktok":400,"min":1.7,"ktok":177,"dev_min_pct":-66,"dev_tok_pct":-56,"flag":true,"cause":"none","date":"2026-10-20"}
+{"task":"T4","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":12,"est_ktok":1200,"min":2.5,"ktok":322,"dev_min_pct":-79,"dev_tok_pct":-73,"flag":true,"cause":"none","date":"2026-10-20"}
+{"task":"T6","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":12,"est_ktok":1200,"min":1.4,"ktok":242,"dev_min_pct":-88,"dev_tok_pct":-80,"flag":true,"cause":"none","date":"2026-10-20"}
+{"task":"T7","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":5,"est_ktok":400,"min":1.5,"ktok":231,"dev_min_pct":-70,"dev_tok_pct":-42,"flag":true,"cause":"none","date":"2026-10-20"}
+{"task":"T5","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":12,"est_ktok":1200,"min":20.9,"ktok":380,"dev_min_pct":74,"dev_tok_pct":-68,"flag":true,"cause":"about 18 min waiting on two Bash calls (probably permission prompts); out_ktok scope change mid-task","date":"2026-10-20"}

@@ -1,0 +1,12 @@
+{
+  "name": "plan-resume: only the Tasks section, not the Estimate vs actual table",
+  "kind": "hook",
+  "hook": "plan-resume.sh",
+  "payload": {
+    "hook_event_name": "SessionStart",
+    "source": "compact",
+    "cwd": "{fixtures}/plan-actuals"
+  },
+  "expect_exit": 0,
+  "contains": "plan.md: T2 (in progress)\""
+}

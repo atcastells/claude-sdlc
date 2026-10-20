@@ -1,0 +1,1 @@
+{"name":"SubagentStop matcher names implementer exactly","kind":"file_contains","file":"{root}/settings.json","file_repo":"{root}/settings.template.json","contains":"\"matcher\": \"implementer\""}

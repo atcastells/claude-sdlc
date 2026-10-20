@@ -1,0 +1,14 @@
+{
+  "name": "calibrate: starting table has the measured implementer row",
+  "kind": "hook",
+  "script": "skills/sdlc/calibrate.sh",
+  "args": [
+    "{fixtures}/calibrate/empty"
+  ],
+  "env": {
+    "CLAUDE_SDLC_ACTUALS": "{fixtures}/calibrate/none.jsonl"
+  },
+  "payload": {},
+  "expect_exit": 0,
+  "contains": "2m/200k"
+}

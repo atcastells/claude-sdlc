@@ -1,0 +1,1 @@
+{"name": "plan template: Estimate vs actual section", "kind": "file_contains", "file": "{root}/skills/sdlc/templates/plan.md", "contains": "## Estimate vs actual"}

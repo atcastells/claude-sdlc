@@ -1,0 +1,3 @@
+{"type":"user","message":{"role":"user","content":"do it"}}
+this line is not json {{{
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"tool_use","id":"t1","name":"SubagentHandback","input":{"message":"report after garbage"}}]}}

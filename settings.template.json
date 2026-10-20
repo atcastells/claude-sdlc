@@ -101,6 +101,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "SubagentHandback",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/subagent-report-check.sh\"",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -111,6 +121,16 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/evals-on-config-change.sh\"",
             "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/task-actuals.sh\"",
+            "timeout": 10
           }
         ]
       }
@@ -155,6 +175,25 @@
             "type": "command",
             "command": "bash \"$HOME/.claude/hooks/subagent-report-check.sh\"",
             "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "implementer",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/subagent-report-check.sh\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/.claude/hooks/task-actuals.sh\"",
+            "timeout": 10
           }
         ]
       }

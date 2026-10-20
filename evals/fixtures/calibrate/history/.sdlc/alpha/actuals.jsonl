@@ -1,0 +1,6 @@
+{"task":"T1","event":"start","runs_on":"implementer","est_min":5,"est_ktok":400}
+{"task":"T1","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":5,"est_ktok":400,"min":7.5,"ktok":480,"out_ktok":9,"dev_min_pct":50,"dev_tok_pct":20,"flag":false,"cause":"","date":"2026-10-20"}
+this line is not json
+{"task":"T2","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":10,"est_ktok":1000,"min":10,"ktok":1000,"out_ktok":9,"dev_min_pct":0,"dev_tok_pct":0,"flag":false,"cause":"","date":"2026-10-20"}
+{"task":"T3","runs_on":"main","model":"claude-opus-5","est_min":15,"est_ktok":2000,"min":12,"ktok":2200,"out_ktok":9,"dev_min_pct":-20,"dev_tok_pct":10,"flag":false,"cause":"","date":"2026-10-20"}
+{"task":"T4","runs_on":"implementer","est_min":0,"est_ktok":400,"min":3,"ktok":300}

@@ -1,0 +1,20 @@
+{"task":"T10","event":"start","ts":"2026-10-20T09:24:09Z"}
+{"task":"T10","runs_on":"main","model":"claude-opus-5-5","est_min":5,"est_ktok":6000,"min":1,"ktok":1707,"dev_min_pct":-80,"dev_tok_pct":-72,"flag":true,"cause":"cause: SKILL.md at its 160-line budget, one extra compaction pass","date":"2026-10-20"}
+{"task":"T5","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":200,"min":1.6,"ktok":95,"dev_min_pct":-20,"dev_tok_pct":-53,"flag":true,"cause":"","date":"2026-10-20","agent_id":"a713fc9d26d2a0aa4"}
+{"task":"T4","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":300,"min":1.6,"ktok":167,"dev_min_pct":-20,"dev_tok_pct":-44,"flag":false,"cause":"","date":"2026-10-20","agent_id":"a0589f70670c7089a"}
+{"task":"T1","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":200,"min":2.2,"ktok":154,"dev_min_pct":10,"dev_tok_pct":-23,"flag":false,"cause":"","date":"2026-10-20","agent_id":"afefab1c760e51da0"}
+{"task":"T9","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":200,"min":2.6,"ktok":98,"dev_min_pct":30,"dev_tok_pct":-51,"flag":true,"cause":"","date":"2026-10-20","agent_id":"ac3f36190581df4a0"}
+{"task":"T2","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":300,"min":1.7,"ktok":134,"dev_min_pct":-15,"dev_tok_pct":-55,"flag":true,"cause":"","date":"2026-10-20","agent_id":"a7d7416b7499883d4"}
+{"task":"T11","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":200,"min":1,"ktok":205,"dev_min_pct":-50,"dev_tok_pct":3,"flag":false,"cause":"","date":"2026-10-20","agent_id":"a20c4ba6b639cc19a"}
+{"task":"T3","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":300,"min":2.5,"ktok":457,"dev_min_pct":25,"dev_tok_pct":52,"flag":true,"cause":"","date":"2026-10-20","agent_id":"a9fb165e036fd61e0"}
+{"task":"T6","event":"start","ts":"2026-10-20T09:31:35Z"}
+{"task":"T6","runs_on":"main","model":"claude-opus-5-5","est_min":5,"est_ktok":6000,"min":1.4,"ktok":771,"dev_min_pct":-72,"dev_tok_pct":-87,"flag":true,"cause":"cause: none","date":"2026-10-20"}
+{"task":"T7","runs_on":"verifier","model":"claude-sonnet-5-5","est_min":8,"est_ktok":700,"min":2.5,"ktok":520,"dev_min_pct":-69,"dev_tok_pct":-26,"flag":true,"cause":"","date":"2026-10-20","agent_id":"a5bda48c084d78308"}
+{"task":"T8","event":"start","ts":"2026-10-20T09:39:43Z"}
+{"task":"T12","runs_on":"reviewer","model":"claude-sonnet-5-5","est_min":8,"est_ktok":700,"min":2.8,"ktok":683,"dev_min_pct":-65,"dev_tok_pct":-2,"flag":true,"cause":"","date":"2026-10-20","agent_id":"a03ad4f24dc600ab3"}
+{"task":"T14","runs_on":"reviewer","model":"claude-sonnet-5-5","est_min":8,"est_ktok":700,"min":3.6,"ktok":1559,"dev_min_pct":-55,"dev_tok_pct":123,"flag":true,"cause":"","date":"2026-10-20","agent_id":"abea60fc5703872ee"}
+{"task":"T8","runs_on":"main","model":"claude-opus-5-5","est_min":5,"est_ktok":6000,"min":9.1,"ktok":7547,"dev_min_pct":82,"dev_tok_pct":26,"flag":true,"cause":"none; first handback refused live, second passed, cause in both logs, one marker","date":"2026-10-20"}
+{"task":"T17","event":"start","ts":"2026-10-20T09:49:18Z"}
+{"task":"T17","runs_on":"main","model":"claude-opus-5-5","est_min":5,"est_ktok":2000,"min":1.2,"ktok":3152,"dev_min_pct":-76,"dev_tok_pct":58,"flag":true,"cause":"none","date":"2026-10-20"}
+{"task":"T16","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":200,"min":2,"ktok":166,"dev_min_pct":0,"dev_tok_pct":-17,"flag":false,"cause":"none","date":"2026-10-20","agent_id":"ab2a54e81ac68594b"}
+{"task":"T15","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":300,"min":3,"ktok":304,"dev_min_pct":50,"dev_tok_pct":1,"flag":false,"cause":"none","date":"2026-10-20","agent_id":"a3afc51c57d4279c5"}

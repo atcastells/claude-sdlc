@@ -1,0 +1,1 @@
+{"name":"sdlc: delegated tasks carry the estimate tag","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"[sdlc:<slug>/T<n> est=<min>m/<ktok>k]"}

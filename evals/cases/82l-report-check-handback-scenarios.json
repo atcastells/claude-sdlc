@@ -1,0 +1,1 @@
+{"name":"report-check: SubagentHandback PreToolUse scenarios (once per agent, no loop)","kind":"hook","script":"evals/scripts/report-check-test.sh","args":["{root}/hooks/subagent-report-check.sh","{fixtures}/report"],"expect_exit":0,"contains":"all passed"}

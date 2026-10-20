@@ -1,0 +1,14 @@
+{
+  "name": "calibrate: medians per runs_on from history",
+  "kind": "hook",
+  "script": "skills/sdlc/calibrate.sh",
+  "args": [
+    "{fixtures}/calibrate/history"
+  ],
+  "payload": {},
+  "expect_exit": 0,
+  "contains": "implementer  repo n=3 min x1.50 tok x1.20  all n=0",
+  "env": {
+    "CLAUDE_SDLC_ACTUALS": "{fixtures}/calibrate/none.jsonl"
+  }
+}

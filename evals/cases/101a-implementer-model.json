@@ -1,0 +1,1 @@
+{"name":"implementer runs on sonnet","kind":"file_contains","file":"{root}/agents/implementer.md","contains":"model: sonnet"}

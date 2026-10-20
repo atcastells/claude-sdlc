@@ -1,1 +1,1 @@
-{"name":"sdlc: small models read, never edit","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"never for edits"}
+{"name":"sdlc: Haiku never edits; Sonnet edits only as implementer","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"Haiku never edits"}

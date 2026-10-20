@@ -1,0 +1,1 @@
+{"task":"T7","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":4,"est_ktok":400,"min":8,"ktok":600,"out_ktok":9,"dev_min_pct":100,"dev_tok_pct":50,"flag":true,"cause":"flaky fixture","date":"2026-10-20"}

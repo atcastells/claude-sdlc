@@ -1,0 +1,1 @@
+{"name":"sdlc: estimates come from calibrate.sh","kind":"file_contains","file":"{root}/skills/sdlc/SKILL.md","contains":"calibrate.sh"}
