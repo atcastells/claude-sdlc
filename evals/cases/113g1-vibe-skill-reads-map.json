@@ -1,0 +1,1 @@
+{"name":"vibe skill: reads the global map first","kind":"file_contains","file":"{root}/skills/vibe/SKILL.md","contains":"Read `.sdlc/map.md`"}

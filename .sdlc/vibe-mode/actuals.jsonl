@@ -1,0 +1,15 @@
+{"task":"T1","event":"start","ts":"2026-11-03T09:42:19Z"}
+{"task":"T2","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":180,"min":4.6,"ktok":59,"dev_min_pct":130,"dev_tok_pct":-67,"flag":true,"cause":"none","date":"2026-11-03","agent_id":"a7936373b8d4ad9b9"}
+{"task":"T1","runs_on":"main","model":"claude-opus-5-5","est_min":3,"est_ktok":2000,"min":8.4,"ktok":751,"dev_min_pct":180,"dev_tok_pct":-62,"flag":true,"cause":"none; two doc pages read in full, findings below","date":"2026-11-03"}
+{"task":"T3","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":3,"est_ktok":300,"min":2.5,"ktok":84,"dev_min_pct":-17,"dev_tok_pct":-72,"flag":true,"cause":"none","date":"2026-11-03","agent_id":"adcb0eccd9d1e7b1a"}
+{"task":"T4","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":200,"min":2.2,"ktok":90,"dev_min_pct":10,"dev_tok_pct":-55,"flag":true,"cause":"none. The only extra work was building the traversal fixture for 113f. A glued `claude-sdlc-mode-` prefix needs a real directory to traverse through, so I added `claude-sdlc-mode-x/`.","date":"2026-11-03","agent_id":"a0aaa8333f07d6c57"}
+{"task":"T5","event":"start","ts":"2026-11-03T09:53:58Z"}
+{"task":"T5","runs_on":"main","model":"claude-opus-5-5","est_min":6,"est_ktok":3000,"min":2.3,"ktok":921,"dev_min_pct":-62,"dev_tok_pct":-69,"flag":true,"cause":"none; 113g* 13 red, 2 needles split across lines fixed by rewrapping the skill text, 13 green; 86 lines","date":"2026-11-03"}
+{"task":"T6","event":"start","ts":"2026-11-03T09:56:18Z"}
+{"task":"T6","runs_on":"main","model":"claude-opus-5-5","est_min":3,"est_ktok":2000,"min":1.3,"ktok":408,"dev_min_pct":-57,"dev_tok_pct":-80,"flag":true,"cause":"none; 113h red then green; core at 75 lines, 65 green","date":"2026-11-03"}
+{"task":"T7","runs_on":"implementer","model":"claude-sonnet-5-5","est_min":2,"est_ktok":180,"min":2.1,"ktok":165,"dev_min_pct":5,"dev_tok_pct":-8,"flag":false,"cause":"none","date":"2026-11-03","agent_id":"a770dd9826d9c62eb"}
+{"task":"T8","event":"start","ts":"2026-11-03T10:00:00Z"}
+{"task":"T8","runs_on":"main","model":"claude-opus-5-5","est_min":5,"est_ktok":3000,"min":2.2,"ktok":867,"dev_min_pct":-56,"dev_tok_pct":-71,"flag":true,"cause":"none; suite 240/0, example profile 241/0, check-public exit 0, clean install 222/0, end-to-end Spec→Vibe→compact→Spec on the installed copy","date":"2026-11-03"}
+{"task":"T11","runs_on":"reviewer","model":"claude-sonnet-5-5","est_min":4,"est_ktok":650,"min":0.7,"ktok":108,"dev_min_pct":-83,"dev_tok_pct":-83,"flag":true,"cause":"","date":"2026-11-03","agent_id":"a164dfeef5457f301"}
+{"task":"T10","runs_on":"reviewer","model":"claude-sonnet-5-5","est_min":4,"est_ktok":650,"min":1.7,"ktok":258,"dev_min_pct":-57,"dev_tok_pct":-60,"flag":true,"cause":"","date":"2026-11-03","agent_id":"a961248476f873d12"}
+{"task":"T12","runs_on":"reviewer","model":"claude-sonnet-5-5","est_min":4,"est_ktok":650,"min":1.9,"ktok":159,"dev_min_pct":-53,"dev_tok_pct":-76,"flag":true,"cause":"","date":"2026-11-03","agent_id":"a2edb7428dc66e547"}

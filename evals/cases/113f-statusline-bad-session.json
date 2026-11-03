@@ -1,0 +1,1 @@
+{"name": "status line ignores a traversal session_id that would hit a real marker", "kind": "hook", "script": "status-line.sh", "env": {"TMPDIR": "{fixtures}/mode-tmp"}, "payload": {"session_id": "x/../claude-sdlc-mode-vibeok", "model": {"display_name": "Opus"}, "workspace": {"current_dir": "{fixtures}/foreign"}}, "expect_exit": 0, "contains": "Spec", "not_contains": "Vibe"}

@@ -25,6 +25,13 @@ COST=$(echo "$input" | jq -r '.cost.total_cost_usd | if type == "number" then
   ((. * 100) | round) as $c | "$\($c / 100 | floor).\(($c % 100) | tostring | if length < 2 then "0" + . else . end)"
   else empty end')
 EFFORT=$(echo "$input" | jq -r '.effort.level // empty')
+SESSION_ID=$(echo "$input" | jq -r '.session_id // empty')
+
+# Workflow mode (Spec by default; Vibe only with a valid id and its marker)
+MODE_VIBE=0
+if . "$(dirname "$0")/hooks/lib/mode.sh" 2>/dev/null; then
+  mode_is_vibe "$SESSION_ID" && MODE_VIBE=1
+fi
 
 # ── Format values ───────────────────────────────────
 FOLDER="${DIR##*/}"
@@ -75,6 +82,11 @@ fi
 SEP=" ${DIM}|${R} "
 LINE="${BOLD}${CYAN}🤖 ${MODEL}${R}"
 [ -n "$EFFORT" ] && LINE+=" ${DIM}${EFFORT}${R}"
+if [ "$MODE_VIBE" = 1 ]; then
+  LINE+="${SEP}${BOLD}${MAGENTA}Vibe${R}"
+else
+  LINE+="${SEP}${DIM}Spec${R}"
+fi
 LINE+="${SEP}${BLUE}📁 ${FOLDER}${R}"
 [ -n "$GIT_PART" ] && LINE+="${SEP}${GIT_PART}"
 LINE+="${SEP}${BAR_COLOR}${BAR} ${PCT}%${R}"

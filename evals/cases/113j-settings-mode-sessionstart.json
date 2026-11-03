@@ -1,0 +1,1 @@
+{"name":"settings template: mode.sh on SessionStart with resume","kind":"file_contains","file":"{root}/settings.json","file_repo":"{root}/settings.template.json","contains":"\"matcher\": \"startup|clear|compact|resume\""}

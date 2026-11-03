@@ -5,6 +5,31 @@ that the migration alone does not fix. **MINOR**: adds rules, skills or project
 files (ships `migrations/<version>.md` if it touches projects). **PATCH**:
 fixes with no change in expected behavior.
 
+## 2.7.0 — 2026-11-03
+
+- **Spec and Vibe modes, per session.** Spec (the full chain) stays the
+  default. `/vibe` switches the session to Vibe, for work that advances by
+  trying ideas and looking at the result; `/vibe off` returns to Spec. In
+  Vibe, a new `vibe` skill replaces intent → spec → plan, the `plan.md`
+  approval and mandatory TDD; git, credentials, the release rule, verifying
+  before claiming and `test-guard` still apply, and a PR still goes
+  through Spec.
+  - Two documents are the agent's base: `.sdlc/map.md`, a mermaid map of
+    the project's systems and features with their state (`idea`, `wip`,
+    `done`, `dropped`), read at start and updated each iteration; and
+    `.sdlc/vibe/<topic>.md`, one per extension (goal, pieces, done and
+    left, log). An idea that settles is promoted to `.sdlc/<slug>/intent.md`.
+  - New hook `mode.sh` (`UserPromptSubmit` and `SessionStart`) keeps a
+    per-session marker in `$TMPDIR`, keyed by a validated `session_id`.
+    Vibe survives compaction and resume; `/clear` and a new session start
+    in Spec. It never echoes the prompt.
+  - The status line shows `Spec` or `Vibe` after the model.
+  - `settings.template.json` adds the `UserPromptSubmit` event. As with
+    every event the template defines, `install.sh` replaces an existing
+    `UserPromptSubmit` in `~/.claude/settings.json` whole: keep your own
+    hooks for it in `settings.local.json`.
+- No migration: nothing `/repo-setup` leaves in projects changes.
+
 ## 2.6.0 — 2026-10-27
 
 - **`/rules`: personal rules by scope.** A new skill adds, modifies or

@@ -1,0 +1,1 @@
+{"name":"vibe skill: only a typed /vibe loads it","kind":"file_contains","file":"{root}/skills/vibe/SKILL.md","contains":"disable-model-invocation: true"}

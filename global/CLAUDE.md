@@ -65,6 +65,8 @@ who approved it. Details and templates: the `sdlc` skill.
 - I never skip a stage. If the input artifact is missing, I say so and offer to
   write it.
 - I do not implement until the engineer approves `plan.md`.
+- Spec mode is the default. Vibe mode (`/vibe`, per session): the `vibe` skill
+  replaces the chain, that approval and TDD; the other rules still apply.
 - I verify my work before a human sees it (tests, build, screenshot). The
   `verifier` subagent checks the change and two adjacent flows.
 - If a test fails, I fix the code, not the test. The `test-guard` hook enforces it.

@@ -1,0 +1,1 @@
+{"name":"vibe skill: promotion seeds an intent","kind":"file_contains","file":"{root}/skills/vibe/SKILL.md","contains":"seeds `.sdlc/<slug>/intent.md`"}

@@ -1,0 +1,1 @@
+{"name": "status line shows Spec without session_id", "kind": "hook", "script": "status-line.sh", "env": {"TMPDIR": "{fixtures}/mode-tmp"}, "payload": {"model": {"display_name": "Opus"}, "workspace": {"current_dir": "{fixtures}/foreign"}}, "expect_exit": 0, "contains": "Spec", "not_contains": "Vibe"}
