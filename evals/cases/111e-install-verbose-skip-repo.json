@@ -1,0 +1,1 @@
+{"name": "install.sh --verbose runs the suite with EVALS_SKIP_REPO=1", "kind": "file_contains", "file": "{root}/install.sh", "contains": "EVALS_SKIP_REPO=1 EVALS_RESULT_JSON=", "repo_only": true}

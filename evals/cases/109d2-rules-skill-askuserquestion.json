@@ -1,0 +1,1 @@
+{"name":"rules skill: asks with AskUserQuestion","kind":"file_contains","file":"{root}/skills/rules/SKILL.md","contains":"AskUserQuestion"}

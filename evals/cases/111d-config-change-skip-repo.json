@@ -1,0 +1,1 @@
+{"name": "evals-on-config-change runs the suite with EVALS_SKIP_REPO=1", "kind": "file_contains", "file": "{root}/hooks/evals-on-config-change.sh", "contains": "EVALS_SKIP_REPO=1 bash \"$suite\""}

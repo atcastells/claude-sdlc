@@ -8,10 +8,10 @@ this file only describes the repo.
 ## Commands
 
 ```bash
-bash evals/run.sh                                   # core suite; ~3 s; "PASS: N FAIL: 0 (repo: ...)"
+bash evals/run.sh                                   # core suite; ~30 s; "PASS: N FAIL: 0 (repo: ...)"
 WORKFLOW_PROFILE=profiles/<name> bash evals/run.sh  # core + that profile's cases
 bash scripts/check-public.sh                        # before publishing: exit 0, 0 denylisted terms
-HOME=$(mktemp -d) ./install.sh --no-profile         # clean test install; ends with the suite green
+HOME=$(mktemp -d) ./install.sh --no-profile --verbose # clean test install; ends with the suite green
 ./install.sh --profile profiles/<name>              # real install into ~/.claude: ask first
 bash -n hooks/*.sh hooks/lib/*.sh install.sh evals/run.sh scripts/*.sh
 ```
@@ -22,7 +22,7 @@ bash -n hooks/*.sh hooks/lib/*.sh install.sh evals/run.sh scripts/*.sh
   appended. Budgets: core ≤ 75 lines, installed ≤ 110 (cases 65, 65b).
 - `hooks/` (deterministic, exit 2 = block); `hooks/lib/semver.sh` and
   `hooks/lib/profile.sh` are shared.
-- `skills/{sdlc,intent,repo-setup}`, `agents/verifier.md`.
+- `skills/{sdlc,intent,repo-setup,rules,workflow-install}`, `agents/`.
 - `evals/cases/*.json`, `evals/fixtures/`, `evals/scripts/`. `run.sh` tests the
   root above it: the repo here, `~/.claude` once installed. `file_repo` = path
   in the repo when it differs from the installed one; `repo_only` = skipped

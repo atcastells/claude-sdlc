@@ -1,0 +1,1 @@
+{"name": "install-verify: runs the suite, writes the result and replaces a live run", "kind": "hook", "script": "evals/scripts/install-verify-test.sh", "args": ["{root}"], "expect_exit": 0, "contains": "all passed", "repo_only": true}

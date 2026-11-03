@@ -9,6 +9,11 @@ set -uo pipefail
 # Relative EVALS_ROOT/WORKFLOW_PROFILE resolve from the caller, before the cd
 [ -n "${EVALS_ROOT:-}" ] && { EVALS_ROOT="$(cd "$EVALS_ROOT" && pwd)" || exit 1; }
 [ -n "${WORKFLOW_PROFILE:-}" ] && { WORKFLOW_PROFILE="$(cd "$WORKFLOW_PROFILE" && pwd)" || exit 1; }
+# EVALS_REPO: resolved once, symlinks included; a missing dir is an error
+if [ -n "${EVALS_REPO:-}" ]; then
+  _er="$EVALS_REPO"
+  EVALS_REPO="$(cd "$_er" 2>/dev/null && pwd -P)" || { echo "EVALS_REPO: no such directory: $_er" >&2; exit 1; }
+fi
 cd "$(dirname "$0")"
 # Claude Code sets it for hooks; cases use their own payload.cwd
 unset CLAUDE_PROJECT_DIR
@@ -31,6 +36,9 @@ expand() {
 
 pat="${1:-*}"
 pass=0; fail=0; failed=()
+# EVALS_RESULT_JSON=<file>: machine-readable result, written atomically at the end
+started=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+failed_json='[]'
 
 # WORKFLOW_PROFILE=<dir> adds the profile cases (repo and installed mode)
 case_files=(cases/$pat.json)
@@ -45,6 +53,20 @@ for f in "${case_files[@]}"; do
   # Cases about files that only exist in the repo (scripts/, profiles/)
   if [ "$mode" = installed ] && [ "$(jq -r '.repo_only // false' "$f")" = true ]; then
     echo "SKIP (repo only)"; continue
+  fi
+
+  # Optional .repo: the product repo the case tests (~ allowed).
+  # EVALS_SKIP_REPO=1 skips those cases; EVALS_REPO=<dir> runs only the ones whose repo is <dir> or contains it
+  crepo=$(jq -r '.repo // empty' "$f")
+  if [ -n "$crepo" ] && [ "${EVALS_SKIP_REPO:-}" = 1 ]; then
+    echo "SKIP (repo case)"; continue
+  fi
+  if [ -n "${EVALS_REPO:-}" ]; then
+    rres=""
+    [ -n "$crepo" ] && rres=$(cd "$(expand "$crepo")" 2>/dev/null && pwd -P)
+    if [ -z "$rres" ] || { [ "$rres" != "$EVALS_REPO" ] && [ "${EVALS_REPO#"${rres%/}"/}" = "$EVALS_REPO" ]; }; then
+      echo "SKIP (not this repo)"; continue
+    fi
   fi
 
   # Profile cases come from a repo-controlled dir: they may not run code
@@ -123,8 +145,31 @@ for f in "${case_files[@]}"; do
   esac
 
   if [ "$got" = "$want" ]; then echo "PASS"; pass=$((pass+1))
-  else echo "FAIL (exit=$got, expected=$want${detail:+; $detail})"; fail=$((fail+1)); failed+=("$name"); fi
+  else
+    echo "FAIL (exit=$got, expected=$want${detail:+; $detail})"; fail=$((fail+1)); failed+=("$name")
+    if [ -n "${EVALS_RESULT_JSON:-}" ]; then
+      cfile=""; jq -e 'has("file")' "$f" >/dev/null && cfile=$(target_file)
+      case "$cfile" in "$HOME"/*) cfile="~${cfile#"$HOME"}" ;; esac
+      failed_json=$(jq -c --arg n "$name" --arg k "$kind" --arg f "$cfile" \
+        --arg d "exit=$got, expected=$want${detail:+; $detail}" \
+        --arg h "$(jq -r '.hook // "" | tostring' "$f")" \
+        '. + [{name:$n, kind:$k, file:$f, detail:$d, hook:$h}]' <<<"$failed_json")
+    fi
+  fi
 done
+
+if [ -n "${EVALS_RESULT_JSON:-}" ]; then
+  ver=""
+  for vf in "$root/VERSION" "$root/workflow/VERSION"; do
+    [ -f "$vf" ] && { ver=$(tr -d '[:space:]' < "$vf"); break; }
+  done
+  tmpj="$EVALS_RESULT_JSON.tmp.$$"
+  jq -n --arg v "$ver" --arg s "$started" --arg e "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+    --argjson p "$pass" --argjson f "$fail" --argjson failed "$failed_json" \
+    '{version: (if $v == "" then null else $v end), started:$s, finished:$e,
+      status: (if $f > 0 then "red" else "green" end), pass:$p, fail:$f, failed:$failed}' \
+    > "$tmpj" && mv "$tmpj" "$EVALS_RESULT_JSON"
+fi
 
 echo "---------------------------------------------------------"
 echo "PASS: $pass   FAIL: $fail   ($mode: $root${profile:+; profile: $profile})"

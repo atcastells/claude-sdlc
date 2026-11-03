@@ -1,0 +1,1 @@
+{"name":"run.sh: case repo field, EVALS_SKIP_REPO and EVALS_REPO","kind":"hook","script":"evals/scripts/run-repo-cases-test.sh","args":["{root}/evals/run.sh"],"expect_exit":0,"contains":"all passed"}

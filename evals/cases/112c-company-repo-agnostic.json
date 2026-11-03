@@ -1,0 +1,1 @@
+{"name": "company fixture rules name nothing of the workflow", "kind": "file_lacks", "file": "{fixtures}/company-acme/docs/rules.md", "pattern": "WF_|claude-sdlc|core rules|\\bcore\\b|\\bprofile\\b"}

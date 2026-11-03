@@ -1,0 +1,1 @@
+{"name":"rules skill: every file operation goes through rules.sh","kind":"file_contains","file":"{root}/skills/rules/SKILL.md","contains":"~/.claude/skills/rules/rules.sh"}

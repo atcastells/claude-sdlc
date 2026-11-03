@@ -18,6 +18,7 @@ bash scripts/check-public.sh               # before publishing a fork: no privat
 | `profile.env` | Names the hooks use in their messages. Plain `KEY=VALUE` data, never executed. Keys: `WF_ORG_NAME`, `WF_SECRETS_MANAGER`, `WF_COMPLIANCE_CONTACT`, `WF_POLICY_NAME`. |
 | `evals/cases/*.json` | Evals for your rules. Installed as `p-*.json`; `{profile}` resolves to this directory in repo mode. |
 | `settings.json` | Optional. Permission lists are unioned with the core template; other keys are deep-merged. |
+| `company.json` | Optional. Reads the company rules from a separate, workflow-agnostic repo: `{"url": "<git clone URL>", "rules": "<path inside that repo>"}`. `install.sh --company-repo <dir>` (or `/workflow-install`) composes core + those rules + this `CLAUDE.md`. Shipped here as `company.json.example` so the example installs without a real repo. |
 | `denylist.txt` | Terms that must never appear in the public repo (your company, people, internal hosts). Read only by `scripts/check-public.sh`; never installed. |
 
 A private profile never leaves your machine: `.gitignore` excludes

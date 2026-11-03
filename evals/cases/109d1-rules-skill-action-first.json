@@ -1,0 +1,1 @@
+{"name":"rules skill: asks the action first","kind":"file_contains","file":"{root}/skills/rules/SKILL.md","contains":"First question: the action"}

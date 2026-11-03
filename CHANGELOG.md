@@ -5,6 +5,71 @@ that the migration alone does not fix. **MINOR**: adds rules, skills or project
 files (ships `migrations/<version>.md` if it touches projects). **PATCH**:
 fixes with no change in expected behavior.
 
+## 2.6.0 — 2026-10-27
+
+- **`/rules`: personal rules by scope.** A new skill adds, modifies or
+  deletes the user's own rules, one question at a time: the action, the
+  scope (every repo of this user, or the repo of this session) and, for
+  this repo, whole repo or only some files (globs suggested from tracked
+  files, each with its match count). Nothing it writes is shared:
+  - Global rules go to `~/.claude/rules/personal/<topic>.md`.
+  - Repo rules go to `<repo>/.claude/rules/personal/<topic>.md`, excluded
+    through `.git/info/exclude` (never `.gitignore`), so `git status` does
+    not change; path-scoped ones carry `paths:` frontmatter.
+- Every file operation goes through `skills/rules/rules.sh`
+  (`write`, `list`, `delete`, `globs`): it writes the frontmatter itself and
+  checks it round-trips (a broken one would load the rule everywhere),
+  refuses globs with no tracked match, credential-shaped text (through
+  `credential-guard`), and a `personal/` dir that is tracked in the repo.
+- The skill tells the user once that a rule is not a lock (only a hook
+  blocks), that customer data never goes in a rule, and when always-loaded
+  personal rules pass 40 lines.
+- Eval: `install.sh` leaves `~/.claude/rules/` alone on install and upgrade.
+- **Quieter install.** `install.sh` no longer prints the suite case by case:
+  it starts `evals/install-verify.sh` in the background and ends with four
+  lines. The result goes to `~/.claude/workflow/install-verify.json`
+  (`running`, `green` or `red`, with each failed case's name, kind, file and
+  detail) and the log to `install-verify.log`.
+  - **Behavior change**: a red suite no longer fails the install. Instead,
+    `workflow-version-check` tells Claude at the next session start. It only
+    interrupts the user when a protection is not active (a failed
+    `credential-guard`, `test-guard` or `production-gate` case), naming it
+    and the action: reinstall, and tell the workflow maintainer if it
+    persists. Any other failure is mentioned in one line under "Found" at
+    the end of the run. A run stuck in `running` for over 10 minutes is
+    reported too.
+  - **Repo cases.** A case can declare `"repo"`: the product repo it tests
+    (incident evals). `EVALS_SKIP_REPO=1` skips them; the background
+    verification, `--verbose` and `evals-on-config-change` set it, since
+    neither an install nor a config change touches that repo's code.
+    `EVALS_REPO=<dir>` runs only the cases of that repo; the `verifier`
+    runs it in the Test stage. A session in a git worktree of the repo does
+    not match (different path). Existing incident evals need `"repo"` added
+    by hand.
+  - `--verbose` (or `WORKFLOW_INSTALL_VERBOSE=1`) keeps the old foreground
+    run that fails the install when red, and also writes the result file;
+    this repo's clean test install uses it. `WORKFLOW_INSTALL_NO_VERIFY`
+    removes the result file, so an old red result never outlives a reinstall.
+    The result shows a file under the home directory as `~/…`, and each
+    failed case's `hook`.
+  - `evals/run.sh` accepts `EVALS_RESULT_JSON=<file>` for a machine-readable
+    result; stdout is unchanged.
+- **Company rules from their own repo.** A profile may carry
+  `company.json` (`url`, `rules`): the company rules then live in a
+  separate repo that names nothing of this workflow. `install.sh
+  --company-repo <dir>` composes core + those rules (leading YAML
+  frontmatter stripped) + the profile's `CLAUDE.md`, and remembers the dir.
+  The rules path must be relative, inside the repo, a regular file, at most
+  16 KB; anything else stops the install before it writes. Without a
+  terminal and no saved dir, the install stops naming the flag and the
+  clone command; nothing searches the disk.
+  - New skill `/workflow-install`: asks where the company repo is (or to
+    clone it) and shows the one command to run; it runs nothing.
+  - At session start, a saved company repo that is gone, or that lost its
+    rules file, brings a notice suggesting `/workflow-install`.
+  - `profiles/example/company.json.example` documents the format.
+- No project migration: nothing `/repo-setup` leaves in projects changes.
+
 ## 2.5.0 — 2026-10-20
 
 - **Secondary profile per repository.** A repo declares

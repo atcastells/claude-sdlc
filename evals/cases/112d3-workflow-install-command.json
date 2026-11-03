@@ -1,0 +1,1 @@
+{"name":"workflow-install skill: install command shape","kind":"file_contains","file":"{root}/skills/workflow-install/SKILL.md","contains":"./install.sh --company-repo '<dir>'"}

@@ -1,0 +1,1 @@
+{"name":"workflow-install skill: clone command shape","kind":"file_contains","file":"{root}/skills/workflow-install/SKILL.md","contains":"git clone '<url>' '<dir>' &&"}

@@ -1,0 +1,1 @@
+{"name":"rules skill: tells the user a rule is not a lock","kind":"file_contains","file":"{root}/skills/rules/SKILL.md","contains":"a rule is not a lock"}

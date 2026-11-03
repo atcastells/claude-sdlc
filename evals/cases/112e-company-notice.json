@@ -1,0 +1,1 @@
+{"name":"company-profile: SessionStart notice when the company rules repo is missing","kind":"hook","script":"evals/scripts/company-notice-test.sh","args":["{root}/hooks/workflow-version-check.sh"],"expect_exit":0,"contains":"all passed"}
