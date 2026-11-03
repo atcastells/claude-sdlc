@@ -1,0 +1,6 @@
+{
+  "name": "verifier runs the incident evals of the repo under test",
+  "kind": "file_contains",
+  "file": "{root}/agents/verifier.md",
+  "contains": "EVALS_REPO="
+}

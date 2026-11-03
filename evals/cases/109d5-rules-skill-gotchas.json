@@ -1,0 +1,1 @@
+{"name":"rules skill: has a Gotchas section","kind":"file_contains","file":"{root}/skills/rules/SKILL.md","contains":"## Gotchas"}

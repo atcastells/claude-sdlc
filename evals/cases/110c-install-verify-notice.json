@@ -1,0 +1,1 @@
+{"name":"install-verify: SessionStart notice scenarios","kind":"hook","script":"evals/scripts/install-verify-notice-test.sh","args":["{root}/hooks/workflow-version-check.sh"],"expect_exit":0,"contains":"all passed"}

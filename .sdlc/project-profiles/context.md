@@ -31,7 +31,7 @@ sensitive business data.
 
 - Hooks `hooks/`, libs `hooks/lib/`, cases `evals/cases/`, fixtures
   `evals/fixtures/`, settings `settings.template.json`.
-- rune-world is at `/Users/acastells/rune-world` (read-only for every task
+- rune-world is at `~/rune-world` (read-only for every task
   except T6, which the main session does).
 
 ## Do not

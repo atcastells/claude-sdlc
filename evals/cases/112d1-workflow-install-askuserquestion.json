@@ -1,0 +1,1 @@
+{"name":"workflow-install skill: asks with AskUserQuestion","kind":"file_contains","file":"{root}/skills/workflow-install/SKILL.md","contains":"AskUserQuestion"}

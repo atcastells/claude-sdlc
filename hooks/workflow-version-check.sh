@@ -76,6 +76,49 @@ Before anything else, tell the developer and offer \`/repo-setup upgrade\` to ap
   fi
 fi
 
+# Result of the background install verification (install-verify.sh)
+iv="$home/install-verify.json"
+if [ -f "$iv" ] && jq -e . "$iv" >/dev/null 2>&1; then
+  iv_status=$(jq -r '.status // empty' "$iv")
+  iv_ver=$(jq -r '.version // empty' "$iv")
+  if [ "$iv_ver" = "$installed" ]; then
+    if [ "$iv_status" = red ]; then
+      iv_src=$(tr -d '\n' < "$home/source" 2>/dev/null)
+      msgs+=("$(jq -r --arg v "$installed" --arg src "$iv_src" '
+        def blocking: (.hook // "") | IN("credential-guard.sh", "test-guard.sh", "production-gate.sh");
+        def line: "\(.name) (\(.kind)): \(.detail)";
+        def bline: "\(.hook) — \(.name): \(.detail)";
+        def cut($l; f): ($l[0:5] | map(f) | join("; ")) + (if ($l | length) > 5 then "; and \(($l | length) - 5) more" else "" end);
+        def act: if $src == "" then "./install.sh in the claude-sdlc repo" else "bash \($src)/install.sh" end;
+        (.failed // []) as $f
+        | ($f | map(select(blocking))) as $b | ($f | map(select(blocking | not))) as $w
+        | "claude-sdlc: install verification of \($v) failed \($f | length) case\(if ($f | length) == 1 then "" else "s" end)."
+          + (if ($b | length) > 0 then "\nProtection not active (tell the user now): " + cut($b; bline) + ". Action: " + act + "; if it persists, tell the workflow maintainer." else "" end)
+          + (if ($w | length) > 0 then "\nNot blocking (do not interrupt; mention in one line under Found at the end of the run): " + cut($w; line) else "" end)
+          + "\nRe-check: bash ~/.claude/evals/run.sh   Full log: ~/.claude/workflow/install-verify.log"' "$iv")")
+    elif [ "$iv_status" = running ]; then
+      iv_started=$(jq -r '.started // empty' "$iv")
+      iv_epoch=$(date -j -u -f '%Y-%m-%dT%H:%M:%SZ' "$iv_started" +%s 2>/dev/null || date -u -d "$iv_started" +%s 2>/dev/null)
+      if [[ "$iv_epoch" =~ ^[0-9]+$ ]] && [ $(( $(date -u +%s) - iv_epoch )) -gt 600 ]; then
+        msgs+=("claude-sdlc: install verification did not finish; run: bash ~/.claude/evals/run.sh")
+      fi
+    fi
+  fi
+fi
+
+# Company rules repo recorded at install time is gone or lost its rules file
+cprof=$({ tr -d '\n' < "$home/profile"; } 2>/dev/null)
+cjson="$cprof/company.json"
+if [ -n "$cprof" ] && [ -f "$cjson" ]; then
+  crules=$(jq -r '.rules // empty | select(type == "string")' "$cjson" 2>/dev/null)
+  if [ -n "$crules" ]; then
+    crepo=$({ tr -d '\n' < "$home/company-repo"; } 2>/dev/null)
+    if [ -z "$crepo" ] || [ ! -f "$crepo/$crules" ]; then
+      msgs+=("claude-sdlc: the company rules repo is not found on this machine (the installed rules come from it). Recommend the developer runs /workflow-install to point at the clone and reinstall.")
+    fi
+  fi
+fi
+
 [ ${#msgs[@]} -eq 0 ] && exit 0
 ctx=$(printf '%s\n\n' "${msgs[@]}")
 jq -n --arg ctx "$ctx" '{hookSpecificOutput: {hookEventName: "SessionStart", additionalContext: $ctx}}'

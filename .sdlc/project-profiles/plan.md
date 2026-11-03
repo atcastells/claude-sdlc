@@ -8,7 +8,7 @@
 
 - `bash evals/run.sh` → `FAIL: 0`, every new case seen red first;
   `WORKFLOW_PROFILE=<org profile> bash evals/run.sh` → `FAIL: 0`.
-- Installed-mode run with `WORKFLOW_PROFILE=/Users/acastells/rune-world/.claude/profile`
+- Installed-mode run with `WORKFLOW_PROFILE=~/rune-world/.claude/profile`
   → the rune-world profile cases pass.
 - `bash scripts/check-public.sh` → exit 0; `bash -n` clean;
   `HOME=$(mktemp -d) ./install.sh --no-profile` → suite green, the temp
@@ -86,7 +86,7 @@ TDD: every case written and seen red first. Fix the code, not the test.
 bash -n hooks/*.sh hooks/lib/*.sh install.sh evals/run.sh scripts/*.sh skills/sdlc/calibrate.sh evals/scripts/*.sh
 bash evals/run.sh
 WORKFLOW_PROFILE=<org profile> bash evals/run.sh
-WORKFLOW_PROFILE=/Users/acastells/rune-world/.claude/profile bash ~/.claude/evals/run.sh   (after install)
+WORKFLOW_PROFILE=~/rune-world/.claude/profile bash ~/.claude/evals/run.sh   (after install)
 bash scripts/check-public.sh
 HOME=$(mktemp -d) ./install.sh --no-profile
 ```

@@ -1,0 +1,1 @@
+{"name":"workflow-install skill: does not search the disk","kind":"file_contains","file":"{root}/skills/workflow-install/SKILL.md","contains":"does not search"}

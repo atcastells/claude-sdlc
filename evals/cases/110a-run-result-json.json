@@ -1,0 +1,1 @@
+{"name":"run.sh: EVALS_RESULT_JSON writes the result file","kind":"hook","script":"evals/scripts/run-result-json-test.sh","args":["{root}/evals/run.sh"],"expect_exit":0,"contains":"all passed"}

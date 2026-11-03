@@ -15,7 +15,9 @@ else does the fixing. If you fix, you contaminate the verification.
 1. **Read the context**: `.sdlc/<slug>/plan.md` and `spec.md` if they exist,
    and the repo's `CLAUDE.md` for the build/test/lint commands.
 2. **Run the verification**: build, tests, lint. The repo's real commands,
-   not the ones you assume.
+   not the ones you assume. Then the incident evals of this repo:
+   `EVALS_REPO="$(git rev-parse --show-toplevel)" bash ~/.claude/evals/run.sh`
+   (`PASS: 0 FAIL: 0` = none); a failure makes the verdict red.
 3. **Test the change's behavior**: not that it compiles — that it does what
    the plan said it would.
 4. **Test two adjacent flows**: what shares code with the change and could

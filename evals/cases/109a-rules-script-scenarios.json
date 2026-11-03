@@ -1,0 +1,1 @@
+{"name":"rules: write scenarios","kind":"hook","script":"evals/scripts/rules-test.sh","args":["{root}/skills/rules/rules.sh"],"expect_exit":0,"contains":"all passed"}

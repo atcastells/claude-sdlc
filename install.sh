@@ -1,6 +1,9 @@
 #!/bin/bash
 # Installs the agentic SDLC workflow into this machine's ~/.claude.
-#   usage: install.sh [--profile <dir> | --no-profile]
+#   usage: install.sh [--profile <dir> | --no-profile] [--company-repo <dir>] [--verbose]
+# Verification runs in the background by default (result: ~/.claude/workflow/
+# install-verify.json); --verbose or WORKFLOW_INSTALL_VERBOSE=1 runs the suite
+# in the foreground and fails the install when it is red.
 # With no option it reuses the previous installation's profile (if any).
 # Idempotent: re-run it to update. Backs up what it overwrites and what it
 # retires (files a previous version installed that no longer exist).
@@ -11,13 +14,17 @@ ts=$(date +%Y%m%d%H%M%S)
 version=$(tr -d '[:space:]' < "$src/VERSION")
 wf="$dst/workflow"
 
-profile=""; profile_set=0
+profile=""; profile_set=0; company_arg=""
+verbose="${WORKFLOW_INSTALL_VERBOSE:-}"
 while [ $# -gt 0 ]; do
   case "$1" in
     --profile)    [ $# -ge 2 ] || { echo "--profile needs a directory" >&2; exit 2; }
                   profile="$2"; profile_set=1; shift 2 ;;
     --no-profile) profile=""; profile_set=1; shift ;;
-    -h|--help)    sed -n '2,4p' "$0"; exit 0 ;;
+    --company-repo) [ $# -ge 2 ] || { echo "--company-repo needs a directory" >&2; exit 2; }
+                  company_arg="$2"; shift 2 ;;
+    --verbose)    verbose=1; shift ;;
+    -h|--help)    sed -n '2,7p' "$0"; exit 0 ;;
     *)            echo "unknown option: $1" >&2; exit 2 ;;
   esac
 done
@@ -48,6 +55,57 @@ fi
 if [ -n "$profile" ]; then
   [ -d "$profile" ] || { echo "no such profile: $profile" >&2; exit 1; }
   profile="$(cd "$profile" && pwd)"
+fi
+
+# Company rules: a profile with company.json names a repo (url) and the rules
+# file inside it. Resolved and validated before anything is written.
+company_dir=""; company_rules_file=""
+if [ -n "$company_arg" ] && { [ -z "$profile" ] || [ ! -f "$profile/company.json" ]; }; then
+  echo "--company-repo needs a profile with company.json${profile:+ ($profile has none)}" >&2; exit 2
+fi
+if [ -n "$profile" ] && [ -f "$profile/company.json" ]; then
+  c_url=$(jq -r 'if (.url|type)=="string" then .url else empty end' "$profile/company.json" 2>/dev/null || true)
+  c_rules=$(jq -r 'if (.rules|type)=="string" then .rules else empty end' "$profile/company.json" 2>/dev/null || true)
+  if [ -z "$c_url" ] || [ -z "$c_rules" ]; then
+    echo "company rules: $profile/company.json needs non-empty string keys \"url\" and \"rules\"" >&2; exit 1
+  fi
+  if [ -n "$company_arg" ]; then company_dir="$company_arg"
+  elif [ -s "$wf/company-repo" ] && { [ -d "$(cat "$wf/company-repo")" ] || [ ! -t 0 ]; }; then company_dir=$(cat "$wf/company-repo")
+  elif [ -t 0 ]; then
+    echo "This profile reads the company rules from a git repository." >&2
+    echo "If you do not have it yet: git clone $c_url <dir>" >&2
+    printf 'Path of the company repository: ' >&2
+    read -r company_dir
+    [ -n "$company_dir" ] || { echo "Cancelled. Use --company-repo <dir>." >&2; exit 1; }
+    company_dir="${company_dir/#\~/$HOME}"
+  else
+    echo "This profile needs the company repository. Run again with --company-repo <dir>." >&2
+    echo "If you do not have it yet: git clone $c_url <dir>" >&2
+    exit 1
+  fi
+  [ -d "$company_dir" ] || { echo "company rules: no such directory: $company_dir (--company-repo <dir>; git clone $c_url <dir>)" >&2; exit 1; }
+  company_dir="$(cd "$company_dir" && pwd -P)"
+  case "$c_rules" in
+    /*) echo "company rules: path must be relative: $c_rules" >&2; exit 1 ;;
+    *$'\n'*) echo "company rules: path has a newline" >&2; exit 1 ;;
+  esac
+  case "/$c_rules/" in
+    */../*) echo "company rules: path must not contain '..': $c_rules" >&2; exit 1 ;;
+  esac
+  cr="$company_dir/$c_rules"
+  if [ -L "$cr" ] || [ ! -f "$cr" ]; then
+    echo "company rules: not a regular file in $company_dir: $c_rules (check --company-repo)" >&2; exit 1
+  fi
+  cr_parent="$(cd "$(dirname "$cr")" && pwd -P)"
+  case "$cr_parent/" in
+    "$company_dir"/*) ;;
+    *) echo "company rules: file is outside the company repository: $c_rules" >&2; exit 1 ;;
+  esac
+  cr_size=$(wc -c < "$cr" | tr -d '[:space:]')
+  if [ "$cr_size" -gt 16384 ]; then
+    echo "company rules: $c_rules is $cr_size bytes (max 16384)" >&2; exit 1
+  fi
+  company_rules_file="$cr"
 fi
 
 mkdir -p "$dst" "$wf"
@@ -102,7 +160,19 @@ install_file() {
   cp "$from" "$to"
 }
 composed=$(mktemp)
-if [ -n "$profile" ] && [ -f "$profile/CLAUDE.md" ]; then
+if [ -n "$company_rules_file" ]; then
+  {
+    cat "$src/global/CLAUDE.md"; echo
+    # leading YAML frontmatter (line 1 is exactly ---, closed by another ---) dropped,
+    # plus one blank line after it; an unclosed block is not frontmatter: kept whole
+    if [ "$(head -n 1 "$company_rules_file")" = "---" ] && tail -n +2 "$company_rules_file" | grep -qx -- '---'; then
+      awk 'NR==1 {fm=1; next} fm==1 {if ($0=="---") fm=2; next} fm==2 {fm=0; if ($0=="") next} {print}' "$company_rules_file"
+    else
+      cat "$company_rules_file"
+    fi
+    if [ -f "$profile/CLAUDE.md" ]; then echo; cat "$profile/CLAUDE.md"; fi
+  } > "$composed"
+elif [ -n "$profile" ] && [ -f "$profile/CLAUDE.md" ]; then
   { cat "$src/global/CLAUDE.md"; echo; cat "$profile/CLAUDE.md"; } > "$composed"
 else
   cp "$src/global/CLAUDE.md" "$composed"
@@ -111,7 +181,7 @@ install_file "$composed" "$dst/CLAUDE.md"
 rm -f "$composed"
 install_file "$src/status-line.sh" "$dst/status-line.sh"
 
-chmod +x "$dst"/hooks/*.sh "$dst"/evals/run.sh "$dst"/skills/repo-setup/check.sh "$dst"/status-line.sh
+chmod +x "$dst"/hooks/*.sh "$dst"/evals/run.sh "$dst"/evals/install-verify.sh "$dst"/skills/repo-setup/check.sh "$dst"/status-line.sh
 chmod +x "$dst"/evals/scripts/*.sh 2>/dev/null || true
 
 # Version, source, profile, migrations and manifest
@@ -125,6 +195,7 @@ if [ -n "$profile" ]; then
 else
   rm -f "$wf/profile" "$wf/profile.env"
 fi
+if [ -n "$company_dir" ]; then printf '%s\n' "$company_dir" > "$wf/company-repo"; else rm -f "$wf/company-repo"; fi
 mv "$new_manifest" "$wf/manifest"
 
 # settings.json: template (+ the profile's settings.json: permission lists
@@ -161,13 +232,25 @@ fi
 rm -f "$template"
 
 if [ -n "${WORKFLOW_INSTALL_NO_VERIFY:-}" ]; then
+  rm -f "$wf/install-verify.json"
   echo "Installed $version (not verified: WORKFLOW_INSTALL_NO_VERIFY)."
   exit 0
 fi
-echo
-echo "Verifying: the eval suite must end green"
-"$dst/evals/run.sh"
-echo
-echo "Installed $version. Hooks take effect in the NEXT Claude Code session."
+if [ -n "$verbose" ]; then
+  echo
+  echo "Verifying: the eval suite must end green"
+  if [ -s "$wf/install-verify.pid" ]; then
+    oldpid=$(cat "$wf/install-verify.pid" 2>/dev/null)
+    case "$oldpid" in ''|*[!0-9]*) ;; *) kill -0 "$oldpid" 2>/dev/null || rm -f "$wf/install-verify.pid" ;; esac
+  fi
+  EVALS_SKIP_REPO=1 EVALS_RESULT_JSON="$wf/install-verify.json" "$dst/evals/run.sh"
+  echo
+  echo "Installed $version. Hooks take effect in the NEXT Claude Code session."
+else
+  nohup bash "$dst/evals/install-verify.sh" "$dst" >/dev/null 2>&1 &
+  echo
+  echo "Installed $version. Hooks take effect in the NEXT Claude Code session."
+  echo "Verifying in the background; Claude will tell you at session start if something fails."
+fi
 echo "Repos set up with an older version will say so when opened: /repo-setup upgrade."
 echo "Plugins are not part of this repo: reinstall yours with /plugin."

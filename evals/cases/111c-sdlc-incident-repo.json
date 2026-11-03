@@ -1,0 +1,6 @@
+{
+  "name": "sdlc stage 6: incident evals in a product repo set repo",
+  "kind": "file_contains",
+  "file": "{root}/skills/sdlc/SKILL.md",
+  "contains": "set `\"repo\"`"
+}

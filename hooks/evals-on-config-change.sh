@@ -32,9 +32,9 @@ export CLAUDE_EVALS_RUNNING=1
 # Source repo: also run the installed profile's cases
 profile_dir=$(cat "$home/profile" 2>/dev/null)
 if [ -n "$src" ] && [ "$suite" = "$src/evals/run.sh" ] && [ -d "$profile_dir" ]; then
-  out=$(WORKFLOW_PROFILE="$profile_dir" bash "$suite" 2>&1)
+  out=$(EVALS_SKIP_REPO=1 WORKFLOW_PROFILE="$profile_dir" bash "$suite" 2>&1)
 else
-  out=$(bash "$suite" 2>&1)
+  out=$(EVALS_SKIP_REPO=1 bash "$suite" 2>&1)
 fi
 code=$?
 
