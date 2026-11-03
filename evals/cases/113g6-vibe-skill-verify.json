@@ -1,0 +1,1 @@
+{"name":"vibe skill: verify before claiming still applies","kind":"file_contains","file":"{root}/skills/vibe/SKILL.md","contains":"Verify before claiming"}

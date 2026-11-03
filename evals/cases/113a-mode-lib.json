@@ -1,0 +1,1 @@
+{"name":"mode lib: marker path and session id validation","kind":"hook","script":"evals/scripts/mode-lib-test.sh","args":["{root}/hooks"],"expect_exit":0,"contains":"all passed"}

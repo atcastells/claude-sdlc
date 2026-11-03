@@ -1,0 +1,1 @@
+{"name":"mode hook: /vibe toggles the session marker and re-injects context","kind":"hook","script":"evals/scripts/mode-hook-test.sh","args":["{root}/hooks"],"expect_exit":0,"contains":"all passed"}

@@ -20,9 +20,9 @@ bash -n hooks/*.sh hooks/lib/*.sh install.sh evals/run.sh scripts/*.sh
 
 - `global/CLAUDE.md` → `~/.claude/CLAUDE.md`, with the profile's `CLAUDE.md`
   appended. Budgets: core ≤ 75 lines, installed ≤ 110 (cases 65, 65b).
-- `hooks/` (deterministic, exit 2 = block); `hooks/lib/semver.sh` and
-  `hooks/lib/profile.sh` are shared.
-- `skills/{sdlc,intent,repo-setup,rules,workflow-install}`, `agents/`.
+- `hooks/` (deterministic, exit 2 = block); `hooks/lib/semver.sh`,
+  `hooks/lib/profile.sh` and `hooks/lib/mode.sh` are shared.
+- `skills/{sdlc,intent,repo-setup,rules,workflow-install,vibe}`, `agents/`.
 - `evals/cases/*.json`, `evals/fixtures/`, `evals/scripts/`. `run.sh` tests the
   root above it: the repo here, `~/.claude` once installed. `file_repo` = path
   in the repo when it differs from the installed one; `repo_only` = skipped

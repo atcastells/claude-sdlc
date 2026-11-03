@@ -1,0 +1,1 @@
+{"name":"vibe skill: updates the map each iteration","kind":"file_contains","file":"{root}/skills/vibe/SKILL.md","contains":"update `.sdlc/map.md`"}

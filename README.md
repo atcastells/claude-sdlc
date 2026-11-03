@@ -21,6 +21,9 @@ git clone https://github.com/atcastells/claude-sdlc && cd claude-sdlc && ./insta
 - **Every change leaves a trail.** `intent.md` → `spec.md` → `plan.md` →
   diff + tests → PR → `incident.md`, committed in the repo. Nothing is built
   before you approve the plan.
+- **A faster mode when you are exploring.** `/vibe` switches the session
+  from Spec to Vibe: small steps, no approval stops, a mermaid map of the
+  project kept up to date, and the status line says which mode you are in.
 - **Guards that do not depend on the model.** Hooks block credentials in
   code, weakened tests and actions on production.
 - **Git stays yours.** Claude prepares; you commit, push and release.
