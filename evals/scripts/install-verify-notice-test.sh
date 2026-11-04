@@ -32,7 +32,7 @@ case_json() { jq -n --arg n "$1" --arg k "$2" --arg f "$3" --arg d "$4" --arg h 
 mk a; echo /opt/sdlc-src > "$wh/source"
 f=$(jq -s '.' <(case_json hook-x hook "" "boom hook" credential-guard.sh) <(case_json tmpl-y file_contains templates/REVIEW.md "missing text") <(case_json cfg-z file_contains settings.json "no key"))
 res red 2.6.0 "$now" "$f"; run a
-case "$ctx" in "claude-sdlc: install verification of 2.6.0 failed 3 cases."*) ;; *) fail a "header: $ctx";; esac
+case "$ctx" in "Claudio: install verification of 2.6.0 failed 3 cases."*) ;; *) fail a "header: $ctx";; esac
 case "$ctx" in *"Protection not active (tell the user now): credential-guard.sh — hook-x: boom hook. Action: bash /opt/sdlc-src/install.sh; if it persists, tell the workflow maintainer."*) ;; *) fail a "blocking group: $ctx";; esac
 case "$ctx" in *"Not blocking (do not interrupt; mention in one line under Found at the end of the run): "*"tmpl-y (file_contains): missing text"*"cfg-z (file_contains): no key"*) ;; *) fail a "not-blocking group: $ctx";; esac
 case "$ctx" in *"Blocking"*|*"Can wait"*) fail a "old wording: $ctx";; esac
@@ -46,7 +46,7 @@ case "$ctx" in *"do not interrupt"*"Found"*) ;; *) fail a2 "not-blocking text: $
 
 # a3. missing source file -> fallback text; missing hook key -> not blocking
 mk a3; res red 2.6.0 "$now" "$(jq -s '.' <(case_json g1 hook "" d test-guard.sh))"; run a3
-case "$ctx" in *"test-guard.sh — g1: d. Action: ./install.sh in the claude-sdlc repo; if it persists, tell the workflow maintainer."*) ;; *) fail a3 "fallback: $ctx";; esac
+case "$ctx" in *"test-guard.sh — g1: d. Action: ./install.sh in the Claudio repo; if it persists, tell the workflow maintainer."*) ;; *) fail a3 "fallback: $ctx";; esac
 mk a4; res red 2.6.0 "$now" "$(jq -n '[{name:"n",kind:"hook",file:"",detail:"d"}]')"; run a4
 case "$ctx" in *"Protection not active"*) fail a4 "missing hook treated as blocking";; esac
 

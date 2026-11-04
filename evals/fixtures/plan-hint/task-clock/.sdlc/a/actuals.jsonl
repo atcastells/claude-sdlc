@@ -1,0 +1,4 @@
+{"task":"T1","event":"start","ts":"2026-11-03T08:00:00Z"}
+{"task":"T1","min":3}
+{"task":"T2","event":"start","ts":"2026-11-03T08:30:00Z"}
+{"task":"T2","event":"start","ts":"2026-11-03T09:00:00Z"}

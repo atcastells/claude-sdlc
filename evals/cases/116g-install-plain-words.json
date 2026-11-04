@@ -1,0 +1,7 @@
+{
+  "name": "install steps: explain the result in plain words",
+  "kind": "file_contains",
+  "file": "{root}/docs/install.md",
+  "contains": "plain words",
+  "repo_only": true
+}

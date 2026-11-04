@@ -14,10 +14,10 @@ fail() { echo "  FAIL $1"; fails=$((fails+1)); }
 
 out=$(mode_marker "abc-123_X"); rc=$?
 [ "$rc" = 0 ] || fail "valid id: rc=$rc"
-[ "$out" = "$tmp/claude-sdlc-mode-abc-123_X" ] || fail "valid id: path '$out'"
+[ "$out" = "$tmp/claudio-mode-abc-123_X" ] || fail "valid id: path '$out'"
 
 TMPDIR="$tmp/" out=$(mode_marker "s1")
-[ "$out" = "$tmp/claude-sdlc-mode-s1" ] || fail "trailing slash in TMPDIR: '$out'"
+[ "$out" = "$tmp/claudio-mode-s1" ] || fail "trailing slash in TMPDIR: '$out'"
 
 for bad in "" "../x" "a b" "a/b"; do
   out=$(mode_marker "$bad"); rc=$?
@@ -27,7 +27,7 @@ for bad in "" "../x" "a b" "a/b"; do
 done
 
 mode_is_vibe "s1" && fail "mode_is_vibe true without marker"
-: > "$tmp/claude-sdlc-mode-s1"
+: > "$tmp/claudio-mode-s1"
 mode_is_vibe "s1" || fail "mode_is_vibe false with marker"
 mode_is_vibe "s2" && fail "mode_is_vibe true for another id"
 

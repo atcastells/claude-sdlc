@@ -92,7 +92,7 @@ elif [ -f .claude/workflow.json ]; then
     pend=$(pending_migrations "$wf_home/migrations" "$pv" "$inst" | cut -f1 | tr '\n' ' ' | sed 's/ $//')
     if [ -n "$pend" ]; then wn "workflow $pv < installed $inst: /repo-setup upgrade ($pend)"
     else ok "workflow $pv, no project changes up to $inst"; fi
-  elif ver_lt "$inst" "$pv"; then wn "workflow $pv > installed $inst: update claude-sdlc and run install.sh"
+  elif ver_lt "$inst" "$pv"; then wn "workflow $pv > installed $inst: update Claudio and run install.sh"
   else ok "workflow up to date ($inst)"; fi
 else
   wn ".claude/workflow.json does not exist: no record of which workflow version was applied"

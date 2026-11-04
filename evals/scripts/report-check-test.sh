@@ -24,7 +24,7 @@ pre() {
 # a. bad implementer handback -> 2 and the marker exists
 pre SubagentHandback implementer ag1 "$bad"; rc=$?
 [ "$rc" -eq 2 ] || fail a "expected 2, got $rc"
-[ -e "$tmp/claude-sdlc-report-ag1" ] || fail a "marker not created"
+[ -e "$tmp/claudio-report-ag1" ] || fail a "marker not created"
 grep -q 'Deviation cause:' "$tmp/err" || fail a "stderr lacks the Deviation cause message"
 
 # b. good handback -> 0

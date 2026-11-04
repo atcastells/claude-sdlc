@@ -1,0 +1,12 @@
+{
+  "name": "plan hint: short-row",
+  "kind": "hook",
+  "script": "evals/scripts/plan-hint-test.sh",
+  "args": [
+    "{root}/hooks",
+    "{root}/evals/fixtures/plan-hint",
+    "short-row"
+  ],
+  "expect_exit": 0,
+  "contains": "all passed"
+}

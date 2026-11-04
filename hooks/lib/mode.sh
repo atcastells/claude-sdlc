@@ -8,7 +8,7 @@ mode_marker() {
   esac
   local base="${TMPDIR:-/tmp}"
   base="${base%/}"
-  printf '%s\n' "$base/claude-sdlc-mode-$1"
+  printf '%s\n' "$base/claudio-mode-$1"
 }
 
 mode_is_vibe() {
@@ -16,5 +16,5 @@ mode_is_vibe() {
     ""|*[!A-Za-z0-9_-]*) return 1 ;;
   esac
   local base="${TMPDIR:-/tmp}"
-  [ -e "${base%/}/claude-sdlc-mode-$1" ]
+  [ -e "${base%/}/claudio-mode-$1" ]
 }

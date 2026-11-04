@@ -1,0 +1,7 @@
+{
+  "name": "install steps: ask about an organization profile",
+  "kind": "file_contains",
+  "file": "{root}/docs/install.md",
+  "contains": "organization profile",
+  "repo_only": true
+}

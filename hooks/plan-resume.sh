@@ -27,6 +27,6 @@ for plan in "$proj"/.sdlc/*/plan.md; do
 done
 [ ${#lines[@]} -eq 0 ] && exit 0
 
-ctx="claude-sdlc: context was compacted. Resume from the Status column of the plan, not from memory. Open tasks:
+ctx="Claudio: context was compacted. Resume from the Status column of the plan, not from memory. Open tasks:
 $(printf -- '- %s\n' "${lines[@]}")"
 jq -n --arg ctx "$ctx" '{hookSpecificOutput: {hookEventName: "SessionStart", additionalContext: $ctx}}'

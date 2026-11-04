@@ -1,4 +1,4 @@
-# claude-sdlc
+# Claudio
 
 Source of truth for an agentic SDLC workflow for Claude Code: global rules,
 skills, hooks, the `verifier` agent and an eval suite. Installed into
@@ -13,15 +13,18 @@ WORKFLOW_PROFILE=profiles/<name> bash evals/run.sh  # core + that profile's case
 bash scripts/check-public.sh                        # before publishing: exit 0, 0 denylisted terms
 HOME=$(mktemp -d) ./install.sh --no-profile --verbose # clean test install; ends with the suite green
 ./install.sh --profile profiles/<name>              # real install into ~/.claude: ask first
-bash -n hooks/*.sh hooks/lib/*.sh install.sh evals/run.sh scripts/*.sh
+bash -n hooks/*.sh hooks/lib/*.sh install.sh evals/run.sh scripts/*.sh status-line.sh
 ```
 
 ## Structure
 
 - `global/CLAUDE.md` → `~/.claude/CLAUDE.md`, with the profile's `CLAUDE.md`
   appended. Budgets: core ≤ 75 lines, installed ≤ 110 (cases 65, 65b).
-- `hooks/` (deterministic, exit 2 = block); `hooks/lib/semver.sh`,
-  `hooks/lib/profile.sh` and `hooks/lib/mode.sh` are shared.
+- `hooks/` (deterministic, exit 2 = block); `hooks/lib/*.sh` are shared;
+  `hooks/lib/plan-hint.sh` feeds the plan hints of `status-line.sh`.
+- `README.md` is for non-technical users (case 116a: no jargon above
+  `## Technical details`); `docs/install.md` is what their agent follows;
+  `docs/technical.md` holds the rest.
 - `skills/{sdlc,intent,repo-setup,rules,workflow-install,vibe}`, `agents/`.
 - `evals/cases/*.json`, `evals/fixtures/`, `evals/scripts/`. `run.sh` tests the
   root above it: the repo here, `~/.claude` once installed. `file_repo` = path

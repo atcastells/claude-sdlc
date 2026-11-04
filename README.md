@@ -1,42 +1,44 @@
-# claude-sdlc
+# Claudio
 
-An agentic SDLC workflow for [Claude Code](https://code.claude.com).
+Claudio makes Claude Code work the way a careful team does: it writes down
+what you asked for, shows you a plan before building anything, checks its
+own work, and never saves or publishes anything without you.
 
 ## Install
 
-Paste this into Claude Code:
+Open Claude Code and paste this:
 
 ```text
-Install the claude-sdlc workflow: clone https://github.com/atcastells/claude-sdlc into ~/claude-sdlc (git pull if it is already there), read its README, run ./install.sh --no-profile (or --profile <dir> if I tell you I have an organization profile), and show me the eval summary it prints.
+Install Claudio for me: follow https://github.com/atcastells/claudio/blob/main/docs/install.md step by step, and tell me in plain words what you did.
 ```
 
-Or by hand (requires `jq`):
+That is all. If your company gave you its own settings for Claudio, say so
+when Claude asks.
 
-```bash
-git clone https://github.com/atcastells/claude-sdlc && cd claude-sdlc && ./install.sh --no-profile
-```
+## What changes for you
 
-## What you get
+- **You approve before anything is built.** Claude writes down the idea and
+  a short plan; nothing is built until you say yes.
+- **It checks its own work.** Before showing you a change, Claude tries it
+  and looks for mistakes.
+- **Your secrets and your work stay yours.** Passwords never end up in
+  files, and saving or publishing changes is always your call.
+- **A quick mode for trying ideas.** Type `/vibe` to skip the paperwork
+  while you explore, and `/vibe off` to go back.
+- **You see where you are.** In the terminal, the bar at the bottom shows
+  the task in progress, its time against the estimate, and what is left.
+- **Your company's rules on top.** Language, data protection, who to ask,
+  even the phrases shown while Claude is thinking.
 
-- **Every change leaves a trail.** `intent.md` → `spec.md` → `plan.md` →
-  diff + tests → PR → `incident.md`, committed in the repo. Nothing is built
-  before you approve the plan.
-- **A faster mode when you are exploring.** `/vibe` switches the session
-  from Spec to Vibe: small steps, no approval stops, a mermaid map of the
-  project kept up to date, and the status line says which mode you are in.
-- **Guards that do not depend on the model.** Hooks block credentials in
-  code, weakened tests and actions on production.
-- **Git stays yours.** Claude prepares; you commit, push and release.
-- **Work verified before you see it.** A `verifier` runs the build, the tests
-  and two nearby flows; three `reviewer`s check bugs, security and fit with
-  the spec.
-- **Lower cost.** Haiku looks things up, Sonnet verifies and reviews, the
-  main model edits.
-- **Rules that stay true.** An eval suite tests the configuration itself and
-  runs whenever it changes.
-- **Your organization's rules on top.** Language, data protection, secrets
-  manager and compliance contact go in a profile:
-  [`profiles/example`](profiles/example/README.md).
+## Need help?
+
+Ask Claude "How does Claudio work?" or "What should I do next?", or open an
+issue at https://github.com/atcastells/claudio/issues.
+
+## Technical details
+
+Installing by hand, organization profiles and how it works inside:
+[docs/technical.md](docs/technical.md).
 
 ## License
 

@@ -20,7 +20,7 @@ run_hook() {
 }
 prompt() { run_hook UserPromptSubmit "$1" "$2" ""; }
 start() { run_hook SessionStart "$1" "" "$2"; }
-marker="$tmp/claude-sdlc-mode-s1"
+marker="$tmp/claudio-mode-s1"
 
 prompt s1 "/vibe"
 [ -e "$marker" ] || fail "/vibe: marker not created"
@@ -53,7 +53,7 @@ prompt s1 "$(printf 'hello\n/vibe')"
 [ ! -e "$marker" ] || fail "second line /vibe: marker created"
 
 prompt s2 "/vibe"
-[ -e "$tmp/claude-sdlc-mode-s2" ] || fail "s2: marker not created"
+[ -e "$tmp/claudio-mode-s2" ] || fail "s2: marker not created"
 [ ! -e "$marker" ] || fail "s2 /vibe touched s1"
 : > "$marker"
 prompt s2 "/vibe off"
@@ -118,16 +118,16 @@ TMPDIR="$tmp/missing-dir" prompt s9 "/vibe"
 
 # a planted symlink is never written through
 victim="$tmp/victim"; printf 'keep' > "$victim"
-ln -s "$victim" "$tmp/claude-sdlc-mode-s7"
+ln -s "$victim" "$tmp/claudio-mode-s7"
 prompt s7 "/vibe"
 [ "$(cat "$victim")" = "keep" ] || fail "symlinked marker: target was truncated"
-[ -L "$tmp/claude-sdlc-mode-s7" ] && fail "symlinked marker: link left in place"
+[ -L "$tmp/claudio-mode-s7" ] && fail "symlinked marker: link left in place"
 
 # /vibe off that cannot remove the marker does not announce Spec
-mkdir "$tmp/claude-sdlc-mode-s6"
+mkdir "$tmp/claudio-mode-s6"
 prompt s6 "/vibe off"
 [ -z "$OUT" ] || fail "unremovable marker: Spec announced anyway"
-rmdir "$tmp/claude-sdlc-mode-s6"
+rmdir "$tmp/claudio-mode-s6"
 
 if [ "$fails" -eq 0 ]; then echo "all passed"; exit 0; fi
 exit 1

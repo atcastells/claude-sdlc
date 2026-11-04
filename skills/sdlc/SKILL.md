@@ -122,7 +122,7 @@ Production requires `RELEASE_APPROVAL`; the `production-gate` hook checks it.
 When production fails, write `incident.md` (`templates/incident.md`): what
 broke, which control failed, impact, root cause. Two mandatory outputs:
 1. A new `intent.md` that starts the chain again for the fix.
-2. **A permanent eval** in `evals/cases/` of the claude-sdlc repo (or in
+2. **A permanent eval** in `evals/cases/` of the Claudio repo (or in
    the organization profile if the rule is org-specific); it is installed in
    `~/.claude/evals/`. Every production incident becomes an eval that is
    never removed. If it runs a test in a product repo, set `"repo"` to that

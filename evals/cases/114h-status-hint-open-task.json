@@ -1,0 +1,12 @@
+{
+  "name": "status line hint: open task shows task and plan",
+  "kind": "hook",
+  "script": "evals/scripts/status-hint-test.sh",
+  "args": [
+    "{root}",
+    "{root}/evals/fixtures/plan-hint",
+    "open-task"
+  ],
+  "expect_exit": 0,
+  "contains": "all passed"
+}

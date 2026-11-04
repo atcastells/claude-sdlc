@@ -78,6 +78,28 @@ if git -C "$DIR" rev-parse --git-dir > /dev/null 2>&1; then
   fi
 fi
 
+# Plan hint (ids and numbers only; nothing when there is no open usable plan)
+PLAN_PART=""; HINT_OK=0
+if [ -n "${WORKTREE_DIR:-}" ]; then
+  HINT_ROOT="$WORKTREE_DIR"
+  if . "$(dirname "$0")/hooks/lib/plan-hint.sh" 2>/dev/null \
+     && plan_hint "$HINT_ROOT"; then
+    HINT_OK=1
+    case "$PH_LEVEL" in over) TC="$YELLOW" ;; way) TC="$RED" ;; *) TC="$DIM" ;; esac
+    if [ -n "$PH_TASK" ]; then
+      if [ -n "$PH_ELAPSED" ]; then TXT="$PH_TASK ${PH_ELAPSED}m/${PH_EST:-?}m"
+      elif [ -n "$PH_EST" ]; then TXT="$PH_TASK ~${PH_EST}m"
+      else TXT="$PH_TASK"; fi
+      PLAN_PART+="${TC}${TXT}${R}${DIM} · ${R}"
+    fi
+    PLAN_PART+="${DIM}${PH_DONE}/${PH_TOTAL} · ~${PH_LEFT_MIN}m left${R}"
+  fi
+fi
+COMPACT=""
+if [ "$PCT" -ge 90 ] || { [ "$PCT" -ge 70 ] && [ "$HINT_OK" = 1 ] && [ -n "${PH_TASK:-}" ]; }; then
+  COMPACT=" ${YELLOW}compact between tasks${R}"
+fi
+
 # ── Build single line ──────────────────────────────
 SEP=" ${DIM}|${R} "
 LINE="${BOLD}${CYAN}🤖 ${MODEL}${R}"
@@ -87,9 +109,10 @@ if [ "$MODE_VIBE" = 1 ]; then
 else
   LINE+="${SEP}${DIM}Spec${R}"
 fi
+[ -n "$PLAN_PART" ] && LINE+="${SEP}${PLAN_PART}"
 LINE+="${SEP}${BLUE}📁 ${FOLDER}${R}"
 [ -n "$GIT_PART" ] && LINE+="${SEP}${GIT_PART}"
-LINE+="${SEP}${BAR_COLOR}${BAR} ${PCT}%${R}"
+LINE+="${SEP}${BAR_COLOR}${BAR} ${PCT}%${R}${COMPACT}"
 [ -n "$COST" ] && LINE+="${SEP}${YELLOW}${COST}${R}"
 
 printf '%b\n' "$LINE"

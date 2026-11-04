@@ -1,0 +1,7 @@
+{
+  "name": "install steps: clone or update ~/claudio",
+  "kind": "file_contains",
+  "file": "{root}/docs/install.md",
+  "contains": "~/claudio",
+  "repo_only": true
+}

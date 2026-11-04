@@ -5,6 +5,40 @@ that the migration alone does not fix. **MINOR**: adds rules, skills or project
 files (ships `migrations/<version>.md` if it touches projects). **PATCH**:
 fixes with no change in expected behavior.
 
+## 3.0.0 — 2026-11-04
+
+- **claude-sdlc is now Claudio.** The repository moves to
+  `github.com/atcastells/claudio` (GitHub redirects the old URL) and the
+  default folder is `~/claudio`. An existing clone keeps working from its
+  old folder: `install.sh` and the version notice reuse the recorded
+  source and profile paths, and a clone is recognised by its files, not
+  its folder name. No project migration: nothing `/repo-setup` leaves in a
+  repo carries the name.
+  - Breaking: every hook notice is prefixed `Claudio:` instead of
+    `claude-sdlc:`, and the temp markers are `claudio-mode-<id>` and
+    `claudio-report-<id>`. A session that is in Vibe while you upgrade
+    returns to Spec once; type `/vibe` again.
+- **Plain README.** One sentence to paste into Claude Code; the agent
+  follows `docs/install.md` (checks `git` and `jq` and asks before
+  installing them, clones or updates, asks about an organization profile,
+  explains the result in plain words). The technical content moves to
+  `docs/technical.md`.
+- **Plan hints in the status line** (terminal). With an open
+  `.sdlc/*/plan.md` (the newest with a task not done): the task in progress
+  against its estimate (`T3 4m/6m`; yellow over, red over twice; `T3 ~6m`
+  for tasks with no start line), what is left (`5/12 · ~22m left`), and
+  `compact between tasks` from 70% context with a task open (90% always).
+  New `hooks/lib/plan-hint.sh`; it prints only ids and numbers, skips
+  symlinks and files over 256 KB, and any parse error leaves the line as
+  before.
+- **Company progress phrases.** A profile's `company.json` may name a
+  `spinner_verbs` file in the company repository: a JSON array of 1–200
+  phrases of 1–80 characters. `install.sh` validates it with the same path
+  checks as `rules` and sets `spinnerVerbs` to `replace` mode, replacing the
+  user's own phrases (kept in the `settings.json.bak-<ts>` backup). Without
+  the key the user's phrases are untouched; if a later profile drops it, the
+  last phrases stay.
+
 ## 2.7.0 — 2026-11-03
 
 - **Spec and Vibe modes, per session.** Spec (the full chain) stays the

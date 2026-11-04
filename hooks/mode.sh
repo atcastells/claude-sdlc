@@ -6,8 +6,8 @@
 
 . "$(dirname "$0")/lib/mode.sh"
 
-ON="claude-sdlc: this session is in Vibe mode (/vibe off returns to Spec). Follow ~/.claude/skills/vibe/SKILL.md (read it again after a compaction): read .sdlc/map.md and the open .sdlc/vibe/*.md first. Small, non-final changes open no .sdlc/<slug>/ and need no approval; promote an idea to intent.md when it settles. Git stays with the developer; credentials, the release rule and verifying before claiming still apply."
-OFF="claude-sdlc: this session is back in Spec mode: the full artifact chain applies (intent, spec, approved plan)."
+ON="Claudio: this session is in Vibe mode (/vibe off returns to Spec). Follow ~/.claude/skills/vibe/SKILL.md (read it again after a compaction): read .sdlc/map.md and the open .sdlc/vibe/*.md first. Small, non-final changes open no .sdlc/<slug>/ and need no approval; promote an idea to intent.md when it settles. Git stays with the developer; credentials, the release rule and verifying before claiming still apply."
+OFF="Claudio: this session is back in Spec mode: the full artifact chain applies (intent, spec, approved plan)."
 
 emit() {
   jq -n --arg e "$1" --arg c "$2" \

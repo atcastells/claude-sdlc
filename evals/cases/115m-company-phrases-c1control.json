@@ -1,0 +1,12 @@
+{
+  "name": "install: company phrases c1control",
+  "kind": "hook",
+  "script": "evals/scripts/company-phrases-test.sh",
+  "args": [
+    "{root}",
+    "c1control"
+  ],
+  "expect_exit": 0,
+  "contains": "all passed",
+  "repo_only": true
+}

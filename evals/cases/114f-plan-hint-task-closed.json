@@ -1,0 +1,12 @@
+{
+  "name": "plan hint: task-closed",
+  "kind": "hook",
+  "script": "evals/scripts/plan-hint-test.sh",
+  "args": [
+    "{root}/hooks",
+    "{root}/evals/fixtures/plan-hint",
+    "task-closed"
+  ],
+  "expect_exit": 0,
+  "contains": "all passed"
+}

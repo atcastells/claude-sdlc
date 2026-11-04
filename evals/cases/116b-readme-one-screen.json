@@ -1,0 +1,7 @@
+{
+  "name": "README fits on one screen (<= 45 lines)",
+  "kind": "max_lines",
+  "file": "{root}/README.md",
+  "max": 45,
+  "repo_only": true
+}

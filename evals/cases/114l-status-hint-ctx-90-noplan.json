@@ -1,0 +1,12 @@
+{
+  "name": "status line hint: 90 percent without plan has compact hint",
+  "kind": "hook",
+  "script": "evals/scripts/status-hint-test.sh",
+  "args": [
+    "{root}",
+    "{root}/evals/fixtures/plan-hint",
+    "ctx-90-noplan"
+  ],
+  "expect_exit": 0,
+  "contains": "all passed"
+}

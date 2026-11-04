@@ -31,7 +31,7 @@ cj() { jq -n '{url:"https://example.com/org/rules.git", rules:"rules/r.md"}' > "
 
 # a. no company-repo file -> notice
 mk a; cj; run a
-case "$ctx" in "claude-sdlc: "*"/workflow-install"*) ;; *) fail a "notice missing: $ctx";; esac
+case "$ctx" in "Claudio: "*"/workflow-install"*) ;; *) fail a "notice missing: $ctx";; esac
 case "$ctx" in *"not found"*) ;; *) fail a "wording: $ctx";; esac
 
 # a2. company-repo file empty -> notice

@@ -1,0 +1,12 @@
+{
+  "name": "status line hint: 70 percent with task has compact hint",
+  "kind": "hook",
+  "script": "evals/scripts/status-hint-test.sh",
+  "args": [
+    "{root}",
+    "{root}/evals/fixtures/plan-hint",
+    "ctx-70"
+  ],
+  "expect_exit": 0,
+  "contains": "all passed"
+}
