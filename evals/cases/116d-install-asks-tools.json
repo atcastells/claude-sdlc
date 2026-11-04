@@ -1,0 +1,7 @@
+{
+  "name": "install steps: check git and jq, install them only after asking",
+  "kind": "file_contains",
+  "file": "{root}/docs/install.md",
+  "contains": "ask the person before installing",
+  "repo_only": true
+}

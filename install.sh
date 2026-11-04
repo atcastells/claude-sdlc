@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installs the agentic SDLC workflow into this machine's ~/.claude.
+# Installs Claudio, the agentic SDLC workflow, into this machine's ~/.claude.
 #   usage: install.sh [--profile <dir> | --no-profile] [--company-repo <dir>] [--verbose]
 # Verification runs in the background by default (result: ~/.claude/workflow/
 # install-verify.json); --verbose or WORKFLOW_INSTALL_VERBOSE=1 runs the suite
@@ -59,7 +59,30 @@ fi
 
 # Company rules: a profile with company.json names a repo (url) and the rules
 # file inside it. Resolved and validated before anything is written.
-company_dir=""; company_rules_file=""
+company_dir=""; company_rules_file=""; company_verbs_file=""; checked_file=""
+check_company_file() { # label, relative path; sets checked_file or exits 1
+  case "$2" in
+    /*) echo "$1: path must be relative: $2" >&2; exit 1 ;;
+    *$'\n'*) echo "$1: path has a newline" >&2; exit 1 ;;
+  esac
+  case "/$2/" in
+    */../*) echo "$1: path must not contain '..': $2" >&2; exit 1 ;;
+  esac
+  cr="$company_dir/$2"
+  if [ -L "$cr" ] || [ ! -f "$cr" ]; then
+    echo "$1: not a regular file in $company_dir: $2 (check --company-repo)" >&2; exit 1
+  fi
+  cr_parent="$(cd "$(dirname "$cr")" && pwd -P)"
+  case "$cr_parent/" in
+    "$company_dir"/*) ;;
+    *) echo "$1: file is outside the company repository: $2" >&2; exit 1 ;;
+  esac
+  cr_size=$(wc -c < "$cr" | tr -d '[:space:]')
+  if [ "$cr_size" -gt 16384 ]; then
+    echo "$1: $2 is $cr_size bytes (max 16384)" >&2; exit 1
+  fi
+  checked_file="$cr"
+}
 if [ -n "$company_arg" ] && { [ -z "$profile" ] || [ ! -f "$profile/company.json" ]; }; then
   echo "--company-repo needs a profile with company.json${profile:+ ($profile has none)}" >&2; exit 2
 fi
@@ -85,31 +108,28 @@ if [ -n "$profile" ] && [ -f "$profile/company.json" ]; then
   fi
   [ -d "$company_dir" ] || { echo "company rules: no such directory: $company_dir (--company-repo <dir>; git clone $c_url <dir>)" >&2; exit 1; }
   company_dir="$(cd "$company_dir" && pwd -P)"
-  case "$c_rules" in
-    /*) echo "company rules: path must be relative: $c_rules" >&2; exit 1 ;;
-    *$'\n'*) echo "company rules: path has a newline" >&2; exit 1 ;;
-  esac
-  case "/$c_rules/" in
-    */../*) echo "company rules: path must not contain '..': $c_rules" >&2; exit 1 ;;
-  esac
-  cr="$company_dir/$c_rules"
-  if [ -L "$cr" ] || [ ! -f "$cr" ]; then
-    echo "company rules: not a regular file in $company_dir: $c_rules (check --company-repo)" >&2; exit 1
+  check_company_file "company rules" "$c_rules"
+  company_rules_file="$checked_file"
+  if jq -e 'has("spinner_verbs")' "$profile/company.json" >/dev/null 2>&1; then
+    c_verbs=$(jq -r 'if (.spinner_verbs|type)=="string" then .spinner_verbs else empty end' "$profile/company.json" 2>/dev/null || true)
+    [ -n "$c_verbs" ] || { echo "company phrases: \"spinner_verbs\" in $profile/company.json must be a non-empty string path" >&2; exit 1; }
+    check_company_file "company phrases" "$c_verbs"
+    # Read once and use that copy: exactly one JSON value; no C0/C1 controls,
+    # line/paragraph separators, bidi overrides or isolates; not blank
+    company_verbs_json=$(jq -c -s 'select(length == 1) | .[0]
+      | select(type=="array" and length>=1 and length<=200 and all(.[]; type=="string"
+          and (length>=1 and length<=80) and test("\\S")
+          and (explode | all(. as $c | ($c>=32 and $c<127) or ($c>=160 and ($c<8232 or $c>8238) and ($c<8294 or $c>8297))))))' \
+      "$checked_file" 2>/dev/null || true)
+    if [ -z "$company_verbs_json" ]; then
+      echo "company phrases: $c_verbs must be one JSON array of 1-200 strings, each 1-80 characters, not blank, no control characters" >&2; exit 1
+    fi
+    company_verbs_file="$checked_file"
   fi
-  cr_parent="$(cd "$(dirname "$cr")" && pwd -P)"
-  case "$cr_parent/" in
-    "$company_dir"/*) ;;
-    *) echo "company rules: file is outside the company repository: $c_rules" >&2; exit 1 ;;
-  esac
-  cr_size=$(wc -c < "$cr" | tr -d '[:space:]')
-  if [ "$cr_size" -gt 16384 ]; then
-    echo "company rules: $c_rules is $cr_size bytes (max 16384)" >&2; exit 1
-  fi
-  company_rules_file="$cr"
 fi
 
 mkdir -p "$dst" "$wf"
-echo "Installing workflow ${prev:+$prev -> }$version from $src -> $dst${profile:+ (profile: $profile)}"
+echo "Installing Claudio ${prev:+$prev -> }$version from $src -> $dst${profile:+ (profile: $profile)}"
 
 # New manifest: paths relative to ~/.claude of everything installed
 new_manifest=$(mktemp)
@@ -215,8 +235,12 @@ else
   cp "$src/settings.template.json" "$template"
 fi
 jq -e . "$template" >/dev/null
+if [ -n "$company_verbs_file" ]; then
+  jq --argjson v "$company_verbs_json" '.spinnerVerbs = {mode: "replace", verbs: $v}' "$template" > "$template.v" && mv "$template.v" "$template"
+  echo "  progress phrases: $(jq -n --argjson v "$company_verbs_json" '$v | length') from the company profile (replaces your own)"
+fi
 if [ -f "$dst/settings.json" ]; then
-  jq -s '.[0] * {hooks: .[1].hooks, permissions: .[1].permissions, statusLine: .[1].statusLine}' \
+  jq -s --arg cv "$company_verbs_file" '.[0] * {hooks: .[1].hooks, permissions: .[1].permissions, statusLine: .[1].statusLine} + (if $cv != "" then {spinnerVerbs: .[1].spinnerVerbs} else {} end)' \
     "$dst/settings.json" "$template" > "$dst/settings.json.new"
   jq -e . "$dst/settings.json.new" >/dev/null
   if cmp -s <(jq -S . "$dst/settings.json") <(jq -S . "$dst/settings.json.new"); then

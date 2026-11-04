@@ -1,0 +1,7 @@
+{
+  "name": "README links the technical details",
+  "kind": "file_contains",
+  "file": "{root}/README.md",
+  "contains": "docs/technical.md",
+  "repo_only": true
+}

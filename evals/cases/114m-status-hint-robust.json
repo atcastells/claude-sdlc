@@ -1,0 +1,12 @@
+{
+  "name": "status line hint: bad plans leave the line as today",
+  "kind": "hook",
+  "script": "evals/scripts/status-hint-test.sh",
+  "args": [
+    "{root}",
+    "{root}/evals/fixtures/plan-hint",
+    "robust"
+  ],
+  "expect_exit": 0,
+  "contains": "all passed"
+}

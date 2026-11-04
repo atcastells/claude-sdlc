@@ -4,7 +4,7 @@
 # Playbook rule: an Important finding carries how to demonstrate the failure.
 # Two events. PreToolUse on SubagentHandback checks tool_input.message before
 # the report leaves; it blocks at most once per agent (marker file
-# ${TMPDIR:-/tmp}/claude-sdlc-report-<agent_id>; no agent_id, or one not matching [A-Za-z0-9_-]+, = never blocks).
+# ${TMPDIR:-/tmp}/claudio-report-<agent_id>; no agent_id, or one not matching [A-Za-z0-9_-]+, = never blocks).
 # SubagentStop checks last_assistant_message, except when the transcript holds
 # a SubagentHandback call (already checked on PreToolUse).
 # Exit 2 = the subagent keeps working and fixes its report.
@@ -28,7 +28,7 @@ if [ "$tool" = SubagentHandback ]; then
   pre=true
   report=$(printf '%s' "$payload" | jq -r '.tool_input.message // ""' 2>/dev/null)
   [[ "$agent_id" =~ ^[A-Za-z0-9_-]+$ ]] || exit 0
-  marker="${TMPDIR:-/tmp}/claude-sdlc-report-$agent_id"
+  marker="${TMPDIR:-/tmp}/claudio-report-$agent_id"
   [ -e "$marker" ] && exit 0
 elif [ -n "$tool" ]; then
   exit 0

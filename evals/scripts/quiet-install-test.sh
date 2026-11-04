@@ -30,7 +30,8 @@ rc=$?
 check "default install exits 0" "[ $rc -eq 0 ]"
 check "default prints no PASS/FAIL case lines" "! grep -Eq '^(PASS|FAIL)' '$tmp/quiet.out'"
 check "default prints no suite summary" "! grep -q 'FAIL: ' '$tmp/quiet.out'"
-after=$(awk '/^Installing workflow/{f=1;next} f' "$tmp/quiet.out" | wc -l | tr -d ' ')
+check "default names Claudio in the Installing line" "grep -q '^Installing Claudio ' '$tmp/quiet.out'"
+after=$(awk '/^Installing Claudio /{f=1;next} f' "$tmp/quiet.out" | wc -l | tr -d ' ')
 check "default prints <= 6 lines after the Installing line ($after)" "[ $after -le 6 ]"
 check "default says it verifies in the background" "grep -q 'Verifying in the background' '$tmp/quiet.out'"
 res="$h/.claude/workflow/install-verify.json"

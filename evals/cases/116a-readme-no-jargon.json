@@ -1,0 +1,8 @@
+{
+  "name": "README main part has no jargon (hook, eval, jq, semver, subagent, model names, .sdlc, YAML/JSON)",
+  "kind": "file_lacks",
+  "file": "{root}/README.md",
+  "pattern": "\\bhooks?\\b|\\bevals?\\b|\\bjq\\b|semver|sub-?agents?|haiku|sonnet|opus|fable|\\.sdlc|yaml|json",
+  "until": "## Technical details",
+  "repo_only": true
+}

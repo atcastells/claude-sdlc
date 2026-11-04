@@ -1,0 +1,7 @@
+{
+  "name": "README paste sentence points the agent at docs/install.md",
+  "kind": "file_contains",
+  "file": "{root}/README.md",
+  "contains": "docs/install.md",
+  "repo_only": true
+}

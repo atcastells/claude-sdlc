@@ -1,0 +1,1 @@
+{"name": "install: company phrases settings nokey", "kind": "hook", "script": "evals/scripts/company-phrases-test.sh", "args": ["{root}", "settings-nokey"], "expect_exit": 0, "contains": "all passed", "repo_only": true}
